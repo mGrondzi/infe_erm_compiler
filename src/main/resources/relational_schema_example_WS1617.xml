@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xsi:noNamespaceSchemaLocation=""
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+<erm>
+	<entitytype name="abc">
+		<attributes>
+			<attribute isprimkey="true" notnull="true">foo</attribute>
+			<attribute isprimkey="false" notnull="false">bar</attribute>
+			<attribute isprimkey="false" notnull="true">qwer</attribute>
+		</attributes>
+	</entitytype>
+
+	<relationtype name="beziehung1">
+		<attributes>
+			<attribute isprimkey="true" notnull="true">foo</attribute>
+			<attribute isprimkey="false" notnull="false">bar</attribute>
+			<attribute isprimkey="false" notnull="true">qwer</attribute>
+		</attributes>
+		<links>
+			<entitytype min="" max="" functionality="">bar</entitytype>
+			<entitytype min="" max="" functionality="">foo</entitytype>
+		</links>
+	</relationtype>
+
+	<relationtype name="beziehung2">
+		<attributes>
+			<attribute isprimkey="true" notnull="true">foo</attribute>
+			<attribute isprimkey="false" notnull="false">bar</attribute>
+			<attribute isprimkey="false" notnull="true">qwer</attribute>
+		</attributes>
+		<links>
+			<entitytype min="" max="" functionality="">bar</entitytype>
+			<entitytype min="" max="" functionality="">foo</entitytype>
+			<entitytype min="" max="" functionality="">qwer</entitytype>
+		</links>
+	</relationtype>
+</erm>
