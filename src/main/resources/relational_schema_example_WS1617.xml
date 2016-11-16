@@ -18,8 +18,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<attribute isprimkey="false" notnull="true">qwer</attribute>
 		</attributes>
 		<links>
-			<entitytype min="" max="" functionality="">bar</entitytype>
-			<entitytype min="" max="" functionality="">foo</entitytype>
+			<entitylink min="" max="" functionality="">bar</entitylink>
+			<entitylink min="" max="" functionality="">foo</entitylink>
 		</links>
 	</relationtype>
 
@@ -30,9 +30,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<attribute isprimkey="false" notnull="true">qwer</attribute>
 		</attributes>
 		<links>
-			<entitytype min="" max="" functionality="">bar</entitytype>
-			<entitytype min="" max="" functionality="">foo</entitytype>
-			<entitytype min="" max="" functionality="">qwer</entitytype>
+			<entitylink min="" max="" functionality="">bar</entitylink>
+			<entitylink min="" max="" functionality="">foo</entitylink>
+			<entitylink min="" max="" functionality="">qwer</entitylink>
 		</links>
 	</relationtype>
 </erm>
