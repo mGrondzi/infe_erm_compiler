@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <erm>
-    <entitytype name="abc">
-        <attributes>
-            <attribute isprimkey="true" notnull="true">foo</attribute>
-            <attribute isprimkey="false" notnull="false">bar</attribute>
-            <attribute isprimkey="false" notnull="true">qwer</attribute>
-        </attributes>
-    </entitytype>
+    <entitytypes>
 
-    <relationtype name="beziehung1">
-        <attributes>
-            <attribute isprimkey="true" notnull="true">foo</attribute>
-            <attribute isprimkey="false" notnull="false">bar</attribute>
-            <attribute isprimkey="false" notnull="true">qwer</attribute>
-        </attributes>
-        <links>
-            <entitylink min="" max="" functionality="">bar</entitylink>
-            <entitylink min="" max="" functionality="">foo</entitylink>
-        </links>
-    </relationtype>
+        <entitytype name="abc">
+            <attributes>
+                <attribute isprimkey="true" notnull="true">foo</attribute>
+                <attribute isprimkey="false" notnull="false">bar</attribute>
+                <attribute isprimkey="false" notnull="true">qwer</attribute>
+            </attributes>
+        </entitytype>
 
-    <relationtype name="beziehung2">
-        <attributes>
-            <attribute isprimkey="true" notnull="true">foo</attribute>
-            <attribute isprimkey="false" notnull="false">bar</attribute>
-            <attribute isprimkey="false" notnull="true">qwer</attribute>
-        </attributes>
-        <links>
-            <entitylink min="" max="" functionality="">bar</entitylink>
-            <entitylink min="" max="" functionality="">foo</entitylink>
-            <entitylink min="" max="" functionality="">qwer</entitylink>
-        </links>
-    </relationtype>
+    </entitytypes>
+
+    <relationtypes>
+        <relationtype name="beziehung1">
+            <attributes>
+                <attribute isprimkey="true" notnull="true">foo</attribute>
+                <attribute isprimkey="false" notnull="false">bar</attribute>
+                <attribute isprimkey="false" notnull="true">qwer</attribute>
+            </attributes>
+            <links>
+                <entitylink min="" max="" functionality="">bar</entitylink>
+                <entitylink min="" max="" functionality="">foo</entitylink>
+            </links>
+        </relationtype>
+
+        <relationtype name="beziehung2">
+            <attributes>
+                <attribute isprimkey="true" notnull="true">foo</attribute>
+                <attribute isprimkey="false" notnull="false">bar</attribute>
+                <attribute isprimkey="false" notnull="true">qwer</attribute>
+            </attributes>
+            <links>
+                <entitylink min="" max="" functionality="">bar</entitylink>
+                <entitylink min="" max="" functionality="">foo</entitylink>
+                <entitylink min="" max="" functionality="">qwer</entitylink>
+            </links>
+        </relationtype>
+    </relationtypes>
 </erm>
