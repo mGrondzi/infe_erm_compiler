@@ -1,13 +1,18 @@
 package de.htwg.msi.infe.ermcompile.model;
 
+import lombok.Getter;
+import lombok.NonNull;
+
 import java.util.List;
 
 /**
  * representation of the Entitytype
  * see xml in resources
  */
+@Getter
 public class Entitytype {
 
+    @NonNull
     private String name;
     private List<Attribute> attributes;
 
@@ -16,12 +21,12 @@ public class Entitytype {
         this.attributes = attributes;
     }
 
-    public String getName() {
-        return name;
+    public void addAttribute(Attribute attribute){
+        this.attributes.add(attribute);
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    public void removeAttribute(int position){
+        this.attributes.remove(position);
     }
 }
 

@@ -1,39 +1,23 @@
 package de.htwg.msi.infe.ermcompile.model;
 
+import lombok.Getter;
+import lombok.NonNull;
+
 /**
  * representation of links between enititys
  * see xml in ressources
  */
+@Getter
 public class EntityLink {
+    @NonNull
+    private Entitytype enititytype;
+    @NonNull
+    private Cardinality cardinality;
+    private int functionality;
 
-    private String name;
-    private String funcionality;
-
-    // min and max der kardinalitäten
-    // als String da wir * ebenfalls nehmen müssen
-    private String min;
-    private String max;
-
-    public EntityLink(String name, String funcionality, String min, String max) {
-        this.name = name;
-        this.funcionality = funcionality;
-        this.min = min;
-        this.max = max;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFuncionality() {
-        return funcionality;
-    }
-
-    public String getMin() {
-        return min;
-    }
-
-    public String getMax() {
-        return max;
+    public EntityLink(Entitytype enititytype, Cardinality cardinality, int functionality) {
+        this.enititytype = enititytype;
+        this.functionality = functionality;
+        this.cardinality = cardinality;
     }
 }

@@ -1,16 +1,22 @@
 package de.htwg.msi.infe.ermcompile.model;
 
+import lombok.Getter;
+import lombok.NonNull;
+
 import java.util.List;
 
 /**
  * representation of Relationtype
  * see xml in ressources
  */
+@Getter
 public class Relationtype {
 
+    @NonNull
     private String name;
-    private List<Attribute> attributes;
+    @NonNull
     private List<EntityLink> links;
+    private List<Attribute> attributes;
 
     public Relationtype(String name, List<Attribute> attributes, List<EntityLink> links) {
         this.name = name;
@@ -18,15 +24,19 @@ public class Relationtype {
         this.links = links;
     }
 
-    public String getName() {
-        return name;
+    public void addEntityLink(EntityLink entityLink){
+        this.links.add(entityLink);
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    public void removeEntityLink(int position){
+        this.links.remove(position);
     }
 
-    public List<EntityLink> getLinks() {
-        return links;
+    public void addAttribute(Attribute attribute){
+        this.attributes.add(attribute);
+    }
+
+    public void removeAttribute(int position){
+        this.attributes.remove(position);
     }
 }
