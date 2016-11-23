@@ -1,5 +1,6 @@
 package de.htwg.msi.infe.ermcompile.model;
 
+import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import lombok.Getter;
 import lombok.NonNull;
 
