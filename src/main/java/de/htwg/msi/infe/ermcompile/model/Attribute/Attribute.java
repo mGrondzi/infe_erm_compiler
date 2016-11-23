@@ -1,4 +1,4 @@
-package de.htwg.msi.infe.ermcompile.model.Key;
+package de.htwg.msi.infe.ermcompile.model.Attribute;
 
 import lombok.Getter;
 import lombok.NonNull;

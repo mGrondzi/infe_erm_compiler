@@ -1,7 +1,4 @@
-package de.htwg.msi.infe.ermcompile.model.Key;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import lombok.Getter;
+package de.htwg.msi.infe.ermcompile.model.Attribute;
 
 
 public abstract class Key extends Attribute{

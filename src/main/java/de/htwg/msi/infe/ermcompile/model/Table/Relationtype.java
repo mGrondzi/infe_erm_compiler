@@ -1,7 +1,7 @@
 package de.htwg.msi.infe.ermcompile.model.Table;
 
 import de.htwg.msi.infe.ermcompile.model.EntityLink;
-import de.htwg.msi.infe.ermcompile.model.Key.Attribute;
+import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import lombok.Getter;
 import lombok.NonNull;
 

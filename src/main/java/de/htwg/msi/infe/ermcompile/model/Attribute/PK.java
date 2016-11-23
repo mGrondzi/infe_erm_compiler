@@ -1,4 +1,4 @@
-package de.htwg.msi.infe.ermcompile.model.Key;
+package de.htwg.msi.infe.ermcompile.model.Attribute;
 
 /**
  * Created by ma241gro on 22.11.2016.
