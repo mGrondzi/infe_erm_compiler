@@ -9,7 +9,6 @@ import java.util.List;
  * representation of the Entitytype
  * see xml in resources
  */
-@Getter
 public class Entitytype extends Table{
 
     public Entitytype(String name, List<Attribute> attributes) {
