@@ -34,7 +34,7 @@ public class Application {
     }
 
     public static void TestXMLCreator(){
-        Erm erm = new Erm(
+        Erm erm = new Erm();
         ArrayList<Attribute> attributeArrayList = new ArrayList<Attribute>();
         attributeArrayList.add(new PK("sad"));
         attributeArrayList.add(new Attribute("sawasd",true));
