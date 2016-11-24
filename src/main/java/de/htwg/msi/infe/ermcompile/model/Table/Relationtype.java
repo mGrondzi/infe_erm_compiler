@@ -5,6 +5,7 @@ import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import lombok.Getter;
 import lombok.NonNull;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.util.List;
 
 /**
@@ -23,10 +24,15 @@ public class Relationtype extends Table{
     }
 
     public void addEntityLink(EntityLink entityLink){
-        this.links.add(entityLink);
+        this.getLinks().add(entityLink);
     }
 
     public void removeEntityLink(int position){
-        this.links.remove(position);
+        this.getLinks().remove(position);
+    }
+
+    @XmlElement(name = "link")
+    public List<EntityLink> getLinks() {
+        return links;
     }
 }
