@@ -4,30 +4,27 @@ import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
-import de.htwg.msi.infe.ermcompile.model.Table.Table;
-import de.htwg.msi.infe.ermcompile.utils.XmlReader;
-import org.w3c.dom.Document;
+import de.htwg.msi.infe.ermcompile.utils.XmlSaxHandler;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.concurrent.SynchronousQueue;
 
 public class Application {
 
     public static void main(String[] args) {
 
         //TestXMLCreator();
-
-        XmlReader reader = new XmlReader(false, true);
-
         try {
-            Document doc = reader.readXmlFile("src/main/resources/relational_schema_example_WS1617.xml");
-            doc.normalize(); //normalizing doc first so we can traverse this easy
-            System.out.print(doc.getDocumentElement().getNodeName());
+            File inputFile = new File("src/main/resources/relational_schema_example_WS1617.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            XmlSaxHandler userhandler = new XmlSaxHandler();
+            saxParser.parse(inputFile, userhandler);
         } catch (Exception e) {
             System.out.print(e);
         }

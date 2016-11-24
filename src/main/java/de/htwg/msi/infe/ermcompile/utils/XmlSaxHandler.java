@@ -15,14 +15,22 @@ public class XmlSaxHandler extends DefaultHandler {
     }
 
     boolean isAttribute = false;
+    boolean inRelationtype = false;
+    boolean inEntitytypes = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase(this.entityType)) {
-            System.out.println("name : " + attributes.getValue("name"));
-        } else if (qName.equalsIgnoreCase("attribute")) {
+            this.inEntitytypes = true;
+            System.out.println("\nentitytype : " + attributes.getValue("name"));
+        }
+        if (qName.equalsIgnoreCase("attribute") && this.inEntitytypes) {
             this.isAttribute = true;
-            System.out.print("attribute: " + localName + " isprimkey:" + attributes.getValue("isprimkey") + "| notnull: " + attributes.getValue("notnull") + "\n");
+            System.out.print("attribute: " + localName + " isprimkey:" + attributes.getValue("isprimkey") + "| notnull: " + attributes.getValue("notnull"));
+        }
+        if (qName.equalsIgnoreCase(this.relationTypes)) {
+            inEntitytypes = false;
+            this.inRelationtype = true;
         }
     }
 
@@ -30,8 +38,17 @@ public class XmlSaxHandler extends DefaultHandler {
     public void characters(char[] ch, int start, int length) throws SAXException {
         if (this.isAttribute) {
             String name = new String(ch, start, length);
-            System.out.println(name);
-            this.isAttribute=false;
+            System.out.print(" name: " + name + "\n");
+            this.isAttribute = false;
+        }
+    }
+
+    @Override
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+
+        if (qName.equalsIgnoreCase(this.entityTypes)) {
+            this.inEntitytypes = false;
+
         }
     }
 

@@ -11,6 +11,22 @@
             </attributes>
         </entitytype>
 
+        <entitytype name="def">
+            <attributes>
+                <attribute isprimkey="true" notnull="true">foo</attribute>
+                <attribute isprimkey="false" notnull="false">bar</attribute>
+                <attribute isprimkey="false" notnull="true">qwer</attribute>
+            </attributes>
+        </entitytype>
+
+        <entitytype name="ghj">
+            <attributes>
+                <attribute isprimkey="true" notnull="true">foo</attribute>
+                <attribute isprimkey="false" notnull="false">bar</attribute>
+                <attribute isprimkey="false" notnull="true">qwer</attribute>
+            </attributes>
+        </entitytype>
+
     </entitytypes>
 
     <relationtypes>
