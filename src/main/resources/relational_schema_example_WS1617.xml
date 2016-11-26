@@ -32,21 +32,21 @@
     <relationtypes>
         <relationtype name="beziehung1">
             <attributes>
-                <attribute isprimkey="true" notnull="true">foo</attribute>
-                <attribute isprimkey="false" notnull="false">bar</attribute>
-                <attribute isprimkey="false" notnull="true">qwer</attribute>
+                <attribute isprimkey="true" notnull="true">att 1</attribute>
+                <attribute isprimkey="false" notnull="false">att 2</attribute>
+                <attribute isprimkey="false" notnull="true">att 3</attribute>
             </attributes>
             <links>
-                <entitylink min="" max="" functionality="">bar</entitylink>
+                <entitylink min="" max="" functionality="">att 5</entitylink>
                 <entitylink min="" max="" functionality="">foo</entitylink>
             </links>
         </relationtype>
 
         <relationtype name="beziehung2">
             <attributes>
-                <attribute isprimkey="true" notnull="true">foo</attribute>
-                <attribute isprimkey="false" notnull="false">bar</attribute>
-                <attribute isprimkey="false" notnull="true">qwer</attribute>
+                <attribute isprimkey="true" notnull="true">att 4</attribute>
+                <attribute isprimkey="false" notnull="false">att 5</attribute>
+                <attribute isprimkey="false" notnull="true">att 6</attribute>
             </attributes>
             <links>
                 <entitylink min="" max="" functionality="">bar</entitylink>
