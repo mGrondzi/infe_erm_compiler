@@ -14,9 +14,9 @@ public class EntityLink {
     private Entitytype enititytype;
     @NonNull
     private Cardinality cardinality;
-    private int functionality;
+    private String functionality;
 
-    public EntityLink(Entitytype enititytype, Cardinality cardinality, int functionality) {
+    public EntityLink(Entitytype enititytype, Cardinality cardinality, String functionality) {
         this.enititytype = enititytype;
         this.functionality = functionality;
         this.cardinality = cardinality;
