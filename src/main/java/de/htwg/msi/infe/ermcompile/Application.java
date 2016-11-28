@@ -23,9 +23,11 @@ public class Application {
             final SAXParserFactory factory = SAXParserFactory.newInstance();
             final SAXParser saxParser = factory.newSAXParser();
             final XmlSaxHandler handler = new XmlSaxHandler();
-
             saxParser.parse(inputFile, handler);
-            System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
+            Erm erm = handler.getErm();
+
+
+            /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
             System.out.println("1st. Entity: " + handler.getEntityTypeXMLList().get(0).getName());
             System.out.println("2nd. Entity: " + handler.getEntityTypeXMLList().get(1).getName());
             System.out.println("3rd. Entity: " + handler.getEntityTypeXMLList().get(2).getName());
@@ -34,9 +36,7 @@ public class Application {
             System.out.println("1st. Relation: " + handler.getRelationtypeXMLList().get(0).getName());
             System.out.println("2nd. Relation: " + handler.getRelationtypeXMLList().get(1).getName());
 
-
-
-
+*/
 
         } catch (Exception e) {
             System.out.println(e);

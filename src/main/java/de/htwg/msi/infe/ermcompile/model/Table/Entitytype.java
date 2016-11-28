@@ -14,6 +14,10 @@ public class Entitytype extends Table{
     public Entitytype(String name, List<Attribute> attributes) {
         super(name,attributes);
     }
+
+    public Entitytype(String name) {
+        super(name);
+    }
 }
 
 

@@ -3,6 +3,7 @@ package de.htwg.msi.infe.ermcompile.model.Table;
 import de.htwg.msi.infe.ermcompile.XMLAdapter.KeyXMLAdapter;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Key;
+import de.htwg.msi.infe.ermcompile.model.EntityLink;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Getter
 public abstract class Table {
 
     @NonNull
@@ -32,6 +34,12 @@ public abstract class Table {
         if (!attributes.isEmpty())
             CreateKeyTable();
     }
+    public Table(String name) {
+        this.name = name;
+        this.attributes = new ArrayList<Attribute>();
+        this.keys = new ArrayList<Key>();
+    }
+
 
     private void CreateKeyTable(){
         this.keys = new ArrayList<Key>();
@@ -55,4 +63,5 @@ public abstract class Table {
         if(this.keys.contains(attribute))
             this.keys.remove(attribute);
     }
+
 }

@@ -9,9 +9,9 @@ import lombok.Getter;
 
 @Getter
 public class Cardinality {
-    private int min;
-    private int max;
+    private String min;
+    private String max;
 
-    public Cardinality(int min, int max) {this.min=min; this.max=max;}
+    public Cardinality(String min, String max) {this.min=min; this.max=max;}
 
 }

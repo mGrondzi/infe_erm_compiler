@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,11 @@ public class Relationtype extends Table{
     public Relationtype(String name, List<Attribute> attributes, List<EntityLink> links) {
         super(name, attributes);
         this.links = links;
+    }
+
+    public Relationtype(String name) {
+        super(name);
+        this.links = new ArrayList<EntityLink>();
     }
 
     public void addEntityLink(EntityLink entityLink){
