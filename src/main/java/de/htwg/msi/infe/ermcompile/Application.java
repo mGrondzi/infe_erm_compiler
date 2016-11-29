@@ -25,7 +25,7 @@ public class Application {
             final XmlSaxHandler handler = new XmlSaxHandler();
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
-
+            TestXMLCreator(erm);
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
             System.out.println("1st. Entity: " + handler.getEntityTypeXMLList().get(0).getName());
@@ -43,13 +43,13 @@ public class Application {
         }
     }
 
-    public static void TestXMLCreator() {
-        Erm erm = new Erm();
-        ArrayList<Attribute> attributeArrayList = new ArrayList<Attribute>();
-        attributeArrayList.add(new PK("sad"));
-        attributeArrayList.add(new Attribute("sawasd", true));
-        erm.addTable(new Entitytype("Test", attributeArrayList));
-        erm.addTable(new Entitytype("Test2", attributeArrayList));
+    public static void TestXMLCreator(Erm erm) {
+//        Erm erm = new Erm();
+//        ArrayList<Attribute> attributeArrayList = new ArrayList<Attribute>();
+//        attributeArrayList.add(new PK("sad"));
+//        attributeArrayList.add(new Attribute("sawasd", true));
+//        erm.addTable(new Entitytype("Test", attributeArrayList));
+//        erm.addTable(new Entitytype("Test2", attributeArrayList));
 
 
         File file = new File("C:\\Users\\manue\\Documents\\file.xml");

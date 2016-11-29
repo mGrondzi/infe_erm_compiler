@@ -3,6 +3,9 @@ package de.htwg.msi.infe.ermcompile.model.Table;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import lombok.Getter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**

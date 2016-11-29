@@ -4,6 +4,9 @@ import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import lombok.Getter;
 import lombok.NonNull;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * representation of links between enititys
  * see xml in ressources
@@ -11,9 +14,12 @@ import lombok.NonNull;
 @Getter
 public class EntityLink {
     @NonNull
+    @XmlElement
     private Entitytype enititytype;
     @NonNull
+    @XmlElement
     private Cardinality cardinality;
+    @XmlAttribute
     private String functionality;
 
     public EntityLink(Entitytype enititytype, Cardinality cardinality, String functionality) {
