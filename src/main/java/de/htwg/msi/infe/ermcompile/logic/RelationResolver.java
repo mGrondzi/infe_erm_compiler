@@ -20,7 +20,7 @@ public class RelationResolver {
         this.erm = erm;
         this.rtables = this.erm.getTables();
 
-        this.rtables = this.extractRelationtypes(rtables);
+        this.rtables = this.extractRelationTypes(rtables);
 
         for (Table table : this.rtables) {
             System.out.println(table.getName());
