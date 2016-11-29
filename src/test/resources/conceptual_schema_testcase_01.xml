@@ -4,29 +4,29 @@
     <entitytypes>
         <entitytype name="Bestellung">
             <attributes>
-                <attribute isprimkey="true" notnull="true">Bestell_ID</attribute>
-                <attribute isprimkey="false" notnull="false">Datum</attribute>
-                <attribute isprimkey="false" notnull="false">Uhrzeit</attribute>
+                <attribute name="Bestell_ID" isprimkey="true" notnull="true"/>
+                <attribute name="Datum" isprimkey="false" notnull="false"/>
+                <attribute name="Uhrzeit" isprimkey="false" notnull="false"/>
             </attributes>
         </entitytype>
         <entitytype name="Kunde">
             <attributes>
-                <attribute isprimkey="true" notnull="true">KundenNr</attribute>
-                <attribute isprimkey="false" notnull="false">Name</attribute>
-                <attribute isprimkey="false" notnull="false">Adresse</attribute>
+                <attribute name="KundenNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="false"/>
+                <attribute name="Adresse" isprimkey="false" notnull="false"/>
             </attributes>
         </entitytype>
         <entitytype name="Pizza">
             <attributes>
-                <attribute isprimkey="true" notnull="true">Name</attribute>
-                <attribute isprimkey="false" notnull="false">Preis</attribute>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+                <attribute name="Preis" isprimkey="false" notnull="false"/>
             </attributes>
         </entitytype>
         <entitytype name="Angestellter">
             <attributes>
-                <attribute isprimkey="true" notnull="true">MitarbeiterNr</attribute>
-                <attribute isprimkey="false" notnull="false">Name</attribute>
-                <attribute isprimkey="false" notnull="false">Position</attribute>
+                <attribute name="MitarbeiterNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="false"/>
+                <attribute name="Position" isprimkey="false" notnull="false"/>
             </attributes>
         </entitytype>
     </entitytypes>
@@ -34,38 +34,38 @@
     <relationtypes>
         <relationtype name="gibt_auf">
             <links>
-                <entitylink min="1" max="1" functionality="N">Bestellung</entitylink>
-                <entitylink min="1" max="*" functionality="1">Kunde</entitylink>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Kunde" min="1" max="*" functionality="1"/>
             </links>
         </relationtype>
         <relationtype name="umfasst">
             <links>
-                <entitylink min="1" max="1" functionality="N">Pizza</entitylink>
-                <entitylink min="1" max="*" functionality="1">Bestellung</entitylink>
+                <entitylink name="Pizza" min="1" max="1" functionality="N"/>
+                <entitylink name="Bestellung" min="1" max="*" functionality="1"/>
             </links>
         </relationtype>
         <relationtype name="bestellt">
             <links>
-                <entitylink min="1" max="1" functionality="N">Pizza</entitylink>
-                <entitylink min="0" max="*" functionality="1">Kunde</entitylink>
+                <entitylink name="Pizza" min="1" max="1" functionality="N"/>
+                <entitylink name="Kunde" min="0" max="*" functionality="1"/>
             </links>
         </relationtype>
         <relationtype name="bearbeitet">
             <links>
-                <entitylink min="1" max="1" functionality="N">Bestellung</entitylink>
-                <entitylink min="0" max="*" functionality="1">Angestellter</entitylink>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Angestellter" min="0" max="*" functionality="1"/>
             </links>
         </relationtype>
         <relationtype name="backt">
             <links>
-                <entitylink min="0" max="*" functionality="N">Angestellter</entitylink>
-                <entitylink min="1" max="*" functionality="1">Pizza</entitylink>
+                <entitylink name="Angestellter" min="0" max="*" functionality="N"/>
+                <entitylink name="Pizza" min="1" max="*" functionality="1"/>
             </links>
         </relationtype>
         <relationtype name="fährt_aus">
             <links>
-                <entitylink min="0" max="*" functionality="N">Angestellter</entitylink>
-                <entitylink min="1" max="1" functionality="1">Pizza</entitylink>
+                <entitylink name="Angestellter" min="0" max="*" functionality="N"/>
+                <entitylink name="Pizza" min="1" max="1" functionality="1"/>
             </links>
         </relationtype>
     </relationtypes>

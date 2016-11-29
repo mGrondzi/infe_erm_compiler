@@ -19,9 +19,9 @@ public class Relationtype extends Table{
     @NonNull
     @XmlElementWrapper(name = "links")
     @XmlElement(name = "link")
-    private List<EntityLink> links;
+    private ArrayList<EntityLink> links;
 
-    public Relationtype(String name, List<Attribute> attributes, List<EntityLink> links) {
+    public Relationtype(String name, List<Attribute> attributes, ArrayList<EntityLink> links) {
         super(name, attributes);
         this.links = links;
     }
