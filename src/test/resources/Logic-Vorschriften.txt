@@ -13,7 +13,7 @@ In diesem Fall gibt es vier Beziehungstypen der Art "(1,1),(1,1)","(1,1),(0,1)",
 	- Fall 1.3: "(0,1),(1,1)"
 		vgl. Fall 1.2, jedoch verkehrt herum
 
-	Fall 1.4: "(0,1),(1,1)"
+	Fall 1.4: "(0,1),(0,1)"
 		Nicht zusammenfassen und eigene Relation für Beziehungstyp beibehalten. Da zwei Schlüsselkandidaten vorhanden,
 		wähle Schlüsselkandidat an erster Stelle als Primärschlüssel aus. Der zweite Schlüsselkandidat ist Alternativschlüssel.
 
