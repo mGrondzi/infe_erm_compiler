@@ -1,5 +1,7 @@
 package de.htwg.msi.infe.ermcompile.logic;
 
+import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
+import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
@@ -38,29 +40,42 @@ public class RelationResolver {
         ArrayList<EntityLink> links = rt.getLinks();
         EntityLink linkLeft = rt.getLinks().get(0);
         EntityLink linkRight = rt.getLinks().get(1);
+        Entitytype leftEntity = linkLeft.getEnititytype();
+        Entitytype rightEntity = linkRight.getEnititytype();
 
-        if (linkLeft.getFunctionality() == "1" && linkRight.getFunctionality() == "1") {
-            if (linkLeft.getCardinality().getMin() == "1" && linkLeft.getCardinality().getMax() == "1") {
-                if (linkRight.getCardinality().getMin() == "1" && linkRight.getCardinality().getMax() == "1") {
-                    // L(1,1)--(1,1)R
-                    //Fasse beide in einer Zusammen
+        if (linkLeft.getFunctionality().equals("1") && linkRight.getFunctionality().equals("1")) {
+            if (linkLeft.getCardinality().getMin().equals("1") && linkLeft.getCardinality().getMax().equals("1")) {
+                if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
+                    //Case [L](1,1)--[]--(1,1)[R]
+                    //TODO Fasse beide in einer Zusammen
+                    ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
+
+                    for(Attribute attribute: rightAttributes){
+                        leftEntity.addAttribute(attribute);
+                    }
+
+                    /* 1. Erstelle neuen PK aus Kombination der PK's beider Tabellen
+                       2. Lösche rechte Tabelle
+                     */
+
+
                 } else {
-                    // L(1,1)--(0,1)R
-                    // Packe PK von R als FK in L
+                    //Case [L](1,1)--[]--(0,1)[R]
+                    //TODO Packe PK von R als FK in L
                 }
             } else {
-                if (linkRight.getCardinality().getMin() == "1" && linkRight.getCardinality().getMax() == "1") {
-                    // L(0,1)--(1,1)R
-                    // Packe PK von L als FK in R
+                if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
+                    //Case [L](0,1)--[]--(1,1)[R]
+                    //TODO Packe PK von L als FK in R
                 } else {
-                    // L(0,1)--(0,1)R
-                    // Erstelle Neue Tabelle PK ist PK(L)+PK(R)
+                    //Case [L](0,1)--[]--(0,1)[R]
+                    //TODO Erstelle Neue Tabelle PK ist PK(L)+PK(R)
                 }
             }
 
-        } else if (linkLeft.getFunctionality() == "1" && linkRight.getFunctionality() == "N") {
+        } else if (linkLeft.getFunctionality().equals("1") && linkRight.getFunctionality().equals("N")) {
 
-        } else if (linkLeft.getFunctionality() == "N" && linkRight.getFunctionality() == "1") {
+        } else if (linkLeft.getFunctionality().equals("N") && linkRight.getFunctionality().equals("1")) {
 
         } else {// N M
 

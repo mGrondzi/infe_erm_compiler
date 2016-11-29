@@ -24,7 +24,7 @@ public abstract class Table {
             @XmlElement(name="attribute",type = PK.class),
             @XmlElement(name="attribute",type = FK.class),
             @XmlElement(name="attribute",type = AK.class)})
-    private List<Attribute> attributes;
+    private ArrayList<Attribute> attributes;
     @XmlElementWrapper(name="primaryKey")
     @XmlElement(name = "attribute")
     private List<PK> pkKeys = null;
@@ -35,7 +35,7 @@ public abstract class Table {
     @XmlElement(name = "foreignKey",nillable = true)
     private List<FK> fkKeys = null;
 
-    public Table(String name, List<Attribute> attributes) {
+    public Table(String name, ArrayList<Attribute> attributes) {
         this.name = name;
         this.attributes = attributes;
         if (!attributes.isEmpty())
