@@ -1,5 +1,6 @@
 package de.htwg.msi.infe.ermcompile;
 
+import de.htwg.msi.infe.ermcompile.logic.RelationResolver;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
@@ -25,6 +26,8 @@ public class Application {
             final XmlSaxHandler handler = new XmlSaxHandler();
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
+            RelationResolver rr = new RelationResolver(erm);
+
             //TestXMLCreator(erm);
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
