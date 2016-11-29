@@ -37,8 +37,8 @@
                 <attribute name="att3" isprimkey="false" notnull="true"/>
             </attributes>
             <links>
-                <entitylink name="bar" min="" max="" functionality=""/>
-                <entitylink name="foo" min="" max="" functionality=""/>
+                <entitylink name="ghj" min="" max="" functionality="1"/>
+                <entitylink name="def" min="" max="" functionality="1"/>
             </links>
         </relationtype>
 
