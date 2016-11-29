@@ -5,25 +5,25 @@
 
         <entitytype name="abc">
             <attributes>
-                <attribute isprimkey="true" notnull="true">foo</attribute>
-                <attribute isprimkey="false" notnull="false">bar</attribute>
-                <attribute isprimkey="false" notnull="true">qwer</attribute>
+                <attribute name="foo" isprimkey="true" notnull="true"/>
+                <attribute name="bar" isprimkey="false" notnull="false"/>
+                <attribute name="qwer" isprimkey="false" notnull="true"/>
             </attributes>
         </entitytype>
 
         <entitytype name="def">
             <attributes>
-                <attribute isprimkey="true" notnull="true">foo</attribute>
-                <attribute isprimkey="false" notnull="false">bar</attribute>
-                <attribute isprimkey="false" notnull="true">qwer</attribute>
+                <attribute name="foo" isprimkey="true" notnull="true"/>
+                <attribute name="bar" isprimkey="false" notnull="false"/>
+                <attribute name="qwer" isprimkey="false" notnull="true"/>
             </attributes>
         </entitytype>
 
         <entitytype name="ghj">
             <attributes>
-                <attribute isprimkey="true" notnull="true">foo</attribute>
-                <attribute isprimkey="false" notnull="false">bar</attribute>
-                <attribute isprimkey="false" notnull="true">qwer</attribute>
+                <attribute name="foo" isprimkey="true" notnull="true"/>
+                <attribute name="bar" isprimkey="false" notnull="false"/>
+                <attribute name="qwer" isprimkey="false" notnull="true"/>
             </attributes>
         </entitytype>
 
@@ -32,26 +32,26 @@
     <relationtypes>
         <relationtype name="beziehung1">
             <attributes>
-                <attribute isprimkey="true" notnull="true">att 1</attribute>
-                <attribute isprimkey="false" notnull="false">att 2</attribute>
-                <attribute isprimkey="false" notnull="true">att 3</attribute>
+                <attribute name="att1" isprimkey="true" notnull="true"/>
+                <attribute name="att2" isprimkey="false" notnull="false"/>
+                <attribute name="att3" isprimkey="false" notnull="true"/>
             </attributes>
             <links>
-                <entitylink min="" max="" functionality="">att 5</entitylink>
-                <entitylink min="" max="" functionality="">foo</entitylink>
+                <entitylink name="bar" min="" max="" functionality=""/>
+                <entitylink name="foo" min="" max="" functionality=""/>
             </links>
         </relationtype>
 
         <relationtype name="beziehung2">
             <attributes>
-                <attribute isprimkey="true" notnull="true">att 4</attribute>
-                <attribute isprimkey="false" notnull="false">att 5</attribute>
-                <attribute isprimkey="false" notnull="true">att 6</attribute>
+                <attribute name="att4" isprimkey="true" notnull="true"/>
+                <attribute name="att5" isprimkey="false" notnull="false"/>
+                <attribute name="att6" isprimkey="false" notnull="true"/>
             </attributes>
             <links>
-                <entitylink min="" max="" functionality="">bar</entitylink>
-                <entitylink min="" max="" functionality="">foo</entitylink>
-                <entitylink min="" max="" functionality="">qwer</entitylink>
+                <entitylink name="bar" min="" max="" functionality=""/>
+                <entitylink name="foo" min="" max="" functionality=""/>
+                <entitylink name="qwer" min="" max="" functionality=""/>
             </links>
         </relationtype>
     </relationtypes>
