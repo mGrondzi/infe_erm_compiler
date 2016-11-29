@@ -1,8 +1,7 @@
 package de.htwg.msi.infe.ermcompile.model.Table;
 
 import de.htwg.msi.infe.ermcompile.XMLAdapter.KeyXMLAdapter;
-import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
-import de.htwg.msi.infe.ermcompile.model.Attribute.Key;
+import de.htwg.msi.infe.ermcompile.model.Attribute.*;
 import de.htwg.msi.infe.ermcompile.model.EntityLink;
 import lombok.Getter;
 import lombok.NonNull;
@@ -22,11 +21,15 @@ public abstract class Table {
     @XmlElementWrapper(name="attrributes")
     @XmlElement(name="attribute")
     private List<Attribute> attributes;
-    @XmlElementWrapper(name="keys")
-    @XmlElement(name = "key")
-    //@XmlJavaTypeAdapter(KeyXMLAdapter.class)
-    private List<Key> keys;
-
+    @XmlElementWrapper(name="primaryKey")
+    @XmlElement(name = "attribute")
+    private List<PK> pkKeys = null;
+    @XmlElementWrapper(name="alternativeKey")
+    @XmlElement(name = "attribute",nillable = true)
+    private List<AK> akKeys = null;
+    @XmlElementWrapper(name="foreignKeys")
+    @XmlElement(name = "foreignKey",nillable = true)
+    private List<FK> fkKeys = null;
 
     public Table(String name, List<Attribute> attributes) {
         this.name = name;
@@ -37,20 +40,31 @@ public abstract class Table {
     public Table(String name) {
         this.name = name;
         this.attributes = new ArrayList<Attribute>();
-        this.keys = new ArrayList<Key>();
     }
 
 
     private void CreateKeyTable(){
-        this.keys = new ArrayList<Key>();
         for (Attribute a: this.attributes) {
             CheckIfKey(a);
         }
     }
 
     private void CheckIfKey(Attribute a){
-        if(a instanceof Key)
-            this.keys.add((Key) a);
+        if(a instanceof PK){
+            if(this.pkKeys == null)
+                this.pkKeys = new ArrayList<PK>();
+            this.pkKeys.add((PK) a);
+        }
+        else if (a instanceof AK){
+            if(this.akKeys == null)
+                this.akKeys = new ArrayList<AK>();
+            this.akKeys.add((AK) a);
+        }
+        else if (a instanceof  FK){
+            if(this.fkKeys == null)
+                this.fkKeys = new ArrayList<FK>();
+            this.fkKeys.add((FK) a);
+        }
     }
 
     public void addAttribute(Attribute attribute){
@@ -60,8 +74,8 @@ public abstract class Table {
 
     public void removeAttribute(Attribute attribute){
         this.attributes.remove(attribute);
-        if(this.keys.contains(attribute))
-            this.keys.remove(attribute);
+        if(this.pkKeys.contains(attribute))
+            this.pkKeys.remove(attribute);
     }
 
 }
