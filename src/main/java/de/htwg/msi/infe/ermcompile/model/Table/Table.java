@@ -19,13 +19,17 @@ public abstract class Table {
     @XmlAttribute
     private String name;
     @XmlElementWrapper(name="attrributes")
-    @XmlElement(name="attribute")
+    @XmlElements({
+            @XmlElement(name="attribute",type = Attribute.class),
+            @XmlElement(name="attribute",type = PK.class),
+            @XmlElement(name="attribute",type = FK.class),
+            @XmlElement(name="attribute",type = AK.class)})
     private List<Attribute> attributes;
     @XmlElementWrapper(name="primaryKey")
     @XmlElement(name = "attribute")
     private List<PK> pkKeys = null;
-    @XmlElementWrapper(name="alternativeKey")
-    @XmlElement(name = "attribute",nillable = true)
+    @XmlElementWrapper(name="alternateKeys")
+    @XmlElement(name = "alternateKey",nillable = true)
     private List<AK> akKeys = null;
     @XmlElementWrapper(name="foreignKeys")
     @XmlElement(name = "foreignKey",nillable = true)

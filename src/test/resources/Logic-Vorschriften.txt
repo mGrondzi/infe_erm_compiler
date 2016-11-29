@@ -1,0 +1,65 @@
+Implementierung binärer Beziehungen:
+
+Fall 1: 1:1-Beziehung
+In diesem Fall gibt es vier Beziehungstypen der Art "(1,1),(1,1)","(1,1),(0,1)","(0,1),(1,1)" und "(0,1),(0,1)".
+
+	- Fall 1.1: "(1,1),(1,1)"
+		Um die minimale Kardinalität von 1 auf beiden Seiten strukturell zu gewährleisten, müssen beide Relationen zu
+		einer Relation zusammengefasst werden, folglich Primärschlüssel des Entitytyps 2 wird in den Entitytyp 1 eingefügt.
+
+	- Fall 1.2: "(1,1),(0,1)"
+		Den Primärschlüssel des Entitytyps 2 wird in den Entitytyp 1 mit kard(1,1) eingefügt.
+
+	- Fall 1.3: "(0,1),(1,1)"
+		vgl. Fall 1.2, jedoch verkehrt herum
+
+	Fall 1.4: "(0,1),(0,1)"
+		Nicht zusammenfassen und eigene Relation für Beziehungstyp beibehalten. Da zwei Schlüsselkandidaten vorhanden,
+		wähle Schlüsselkandidat an erster Stelle als Primärschlüssel aus. Der zweite Schlüsselkandidat ist Alternativschlüssel.
+
+Fall 2: 1:N-Beziehung
+In diesem Fall gibt es vier Beziehungstypen der Art "(0,*),(1,1)","(0,*),(0,1)","(1,*),(1,1)" und "(1,*),(0,1)".
+
+	- Fall 2.1: "(0,*),(1,1)"
+		Die Relation, die aus dem Entitätstyp (hier ET 1) mit der Kardinalität 1 gebildet wurde, bleibt erhalten.
+		Die beiden anderen Relationen (hier ET 2 und BT) mit ihren Attributen werden zu einer verschmolzen. Primärschlüssel
+		wird der minimale Schlüsselkandidat von ET 2. Der übernommene Primärschlüssel bildet den Fremdschlüssel.
+
+	- Fall 2.2: "(0,*),(0,1)"
+		vgl. Fall 2.1
+
+	- Fall 2.3: "(1,*),(1,1)"
+		vgl. Fall 2.1
+
+	- Fall 2.4: "(1,*),(0,1)"
+		vgl. Fall 2.3
+
+Fall 3: N:M-Beziehung
+In diesem Fall gibt es vier Beziehungstypen, für die alle das gleiche gilt.
+
+	- Relation für N:M-Beziehungstyp kann nicht mit den Relationen für die Entity-Typen ET 1 und ET 2 zusammengefasst
+	werden. Relation für den Beziehungstyp beinhaltet jeweils einen Fremdschlüssel auf die Relationen für ET 1 und ET 2.
+	Die Primärschlüssel der beteiligten Entitytypen bilden zusammen den Primär bzw. den Fremdschlüssel im Relationenschema
+	des Beziehungstyps.
+
+Tenäre Beziehungstypen:
+Ausgehend nur der Betrachtung der Funktionalitäten gibt es vier Arten von Beziehungstypen "(N,M,K)","(N,M,1)","(N,1,1)" und
+"(1,1,1)".
+
+    - Fall 1: "(N,M,K)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Die beteiligten Entitytypen bilden zusammen den Primärschlüssel dieser.
+        Zeitgleich handelt es sich um die Fremdschlüssel, die auf die jeweiligen Entitytypen referenzieren.
+
+    - Fall 2: "(N,M,1)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Den Primärschlüssel bilden die Primärschlüssel ET1 (N) und ET2 (M),
+        da Schlüssel minimal sein sollte ( ET1(N) x ET2(M) -> ET3(1) )
+
+    - Fall 3: "(N,1,1)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Hier gibt es zwei Schlüsselkandidaten, da
+        ET1(N) x ET2(1) -> ET3(1) bzw. ET1(N) x ET3(1) -> ET1(1) bestimmen. Nimm ersten Schlüsselkanidat als Primärschlüssel.
+        Der zweite Schlüsselkanidat ist ein Alternativschlüssel.
+
+    - Fall 4: "(1,1,1)"
+        Erzeuge eine eigene "Table". Wähle als Primärschlüssel den aus dem ersten Entitytyp aus, bei welchem die Kardinalität (1,1)
+        spezifiziert wurde. Wurde z.B. ET1(1) kard(1,1) und ET2(1) kard(1,1) modelliert, so handelt es sich um ein zusammen-
+        gesetzter Primärschlüssel aus den Relationen ET1 und ET2 ( da ET1(1) x ET2(1) -> ET3(1) )
