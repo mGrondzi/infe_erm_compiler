@@ -36,14 +36,10 @@ public class RelationResolver {
         }
         return rl;
     }
-    /*
-
 
     private void getLinksOfRelationtype(Relationtype rl){
         ArrayList<EntityLink> link = rl.getLinks();
-
     }
-     */
 
 
 
