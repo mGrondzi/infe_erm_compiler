@@ -8,14 +8,12 @@ import de.htwg.msi.infe.ermcompile.model.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
-import de.htwg.msi.infe.ermcompile.model.XML.AttributesXML;
-import de.htwg.msi.infe.ermcompile.model.XML.LinksXML;
+
 import lombok.Getter;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Locator;
-
 
 public class XmlSaxHandler extends DefaultHandler {
 
@@ -37,20 +35,16 @@ public class XmlSaxHandler extends DefaultHandler {
     private final String funct = "functionality";
 
     //stack to check in which DOM we are
-    private boolean inAttribute = false;
     private boolean inRelationtypes = false;
     private boolean inEntitytypes = false;
-    private boolean inLink = false;
 
     //representErm
     @Getter
     private Erm erm;
 
-
     public XmlSaxHandler() {
         this.erm = new Erm();
     }
-
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -61,18 +55,14 @@ public class XmlSaxHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase(this.entityType)) {
             this.checkValidTag(attributes.getValue(this.name), this.name, this.locator);
-            System.out.println();
-
             //Create Entity
             this.erm.addTable(new Entitytype(attributes.getValue(this.name)));
-
-            System.out.println("\nentitytype : " + attributes.getValue(this.name));
         }
         if (qName.equalsIgnoreCase(this.attribute) && (this.inEntitytypes || this.inRelationtypes)) {
 
             this.checkValidTag(attributes.getValue(this.isprimkey), this.isprimkey, locator);
             this.checkValidTag(attributes.getValue(this.notnull), this.notnull, locator);
-            this.checkValidTag(name, this.name, this.locator);
+            this.checkValidTag(attributes.getValue(this.name), this.name, this.locator);
 
             if (Boolean.parseBoolean(attributes.getValue(this.isprimkey))) {
                 this.erm.getTables().get(this.erm.getTables().size() - 1).addAttribute(new PK(attributes.getValue(this.name)));
@@ -80,9 +70,8 @@ public class XmlSaxHandler extends DefaultHandler {
                 this.erm.getTables().get(this.erm.getTables().size() - 1).addAttribute(new Attribute(attributes.getValue(this.name),
                         Boolean.parseBoolean(attributes.getValue(this.notnull))));
             }
-
-            System.out.print("attribute: isprimkey:" + attributes.getValue(this.isprimkey) + "| notnull: " + attributes.getValue(this.notnull));
         }
+
         if (qName.equalsIgnoreCase(this.relationTypes)) {
             this.inRelationtypes = true;
         }
@@ -90,22 +79,20 @@ public class XmlSaxHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase(this.relationType)) {
             this.checkValidTag(attributes.getValue(this.name), name, locator);
             erm.addTable(new Relationtype(attributes.getValue(this.name)));
-            System.out.println("\nrelationtype : " + attributes.getValue(this.name));
         }
 
-        if (qName.equalsIgnoreCase(this.entityLink)) {
+        if (qName.equalsIgnoreCase(this.entityLink) && this.inRelationtypes) {
             this.checkValidTag(attributes.getValue(this.min), this.min, this.locator);
             this.checkValidTag(attributes.getValue(this.max), this.max, this.locator);
 
             Relationtype relationtype = (Relationtype) this.erm.getTables().get(this.erm.getTables().size() - 1);
             for (Table t : this.erm.getTables()) {
                 if (t.getName().equals(attributes.getValue(this.name))) {
+                    System.out.println(t.getName());
                     relationtype.addEntityLink(new EntityLink((Entitytype) t, new Cardinality(attributes.getValue(this.min),
                             attributes.getValue(this.max)), attributes.getValue(this.funct)));
                 }
             }
-            System.out.print("link: min:" + attributes.getValue(this.min) + "| max: " + attributes.getValue(this.max)
-                    + "| functionality :" + attributes.getValue(this.funct));
         }
     }
 
@@ -123,7 +110,6 @@ public class XmlSaxHandler extends DefaultHandler {
     public void setDocumentLocator(Locator locator) {
         this.locator = locator;
     }
-
 
     private void checkValidTag(String s, String tagType, Locator locator) throws SAXException {
 
@@ -143,7 +129,5 @@ public class XmlSaxHandler extends DefaultHandler {
         if (tagType.equals(this.min) || tagType.equals(this.max)) {
             //TODO check min max values in tags
         }
-
-
     }
 }
