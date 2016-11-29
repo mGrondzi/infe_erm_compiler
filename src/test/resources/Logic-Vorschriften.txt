@@ -41,3 +41,25 @@ In diesem Fall gibt es vier Beziehungstypen, für die alle das gleiche gilt.
 	werden. Relation für den Beziehungstyp beinhaltet jeweils einen Fremdschlüssel auf die Relationen für ET 1 und ET 2.
 	Die Primärschlüssel der beteiligten Entitytypen bilden zusammen den Primär bzw. den Fremdschlüssel im Relationenschema
 	des Beziehungstyps.
+
+Tenäre Beziehungstypen:
+Ausgehend nur der Betrachtung der Funktionalitäten gibt es vier Arten von Beziehungstypen "(N,M,K)","(N,M,1)","(N,1,1)" und
+"(1,1,1)".
+
+    - Fall 1: "(N,M,K)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Die beteiligten Entitytypen bilden zusammen den Primärschlüssel dieser.
+        Zeitgleich handelt es sich um die Fremdschlüssel, die auf die jeweiligen Entitytypen referenzieren.
+
+    - Fall 2: "(N,M,1)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Den Primärschlüssel bilden die Primärschlüssel ET1 (N) und ET2 (M),
+        da Schlüssel minimal sein sollte ( ET1(N) x ET2(M) -> ET3(1) )
+
+    - Fall 3: "(N,1,1)"
+        Erzeuge eine eigene "Table" (=behalte Beziehungstyp). Hier gibt es zwei Schlüsselkandidaten, da
+        ET1(N) x ET2(1) -> ET3(1) bzw. ET1(N) x ET3(1) -> ET1(1) bestimmen. Nimm ersten Schlüsselkanidat als Primärschlüssel.
+        Der zweite Schlüsselkanidat ist ein Alternativschlüssel.
+
+    - Fall 4: "(1,1,1)"
+        Erzeuge eine eigene "Table". Wähle als Primärschlüssel den aus dem ersten Entitytyp aus, bei welchem die Kardinalität (1,1)
+        spezifiziert wurde. Wurde z.B. ET1(1) kard(1,1) und ET2(1) kard(1,1) modelliert, so handelt es sich um ein zusammen-
+        gesetzter Primärschlüssel aus den Relationen ET1 und ET2 ( da ET1(1) x ET2(1) -> ET3(1) )
