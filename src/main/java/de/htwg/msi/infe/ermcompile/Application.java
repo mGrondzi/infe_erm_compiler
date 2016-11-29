@@ -25,7 +25,7 @@ public class Application {
             final XmlSaxHandler handler = new XmlSaxHandler();
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
-            TestXMLCreator(erm);
+            //TestXMLCreator(erm);
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
             System.out.println("1st. Entity: " + handler.getEntityTypeXMLList().get(0).getName());
