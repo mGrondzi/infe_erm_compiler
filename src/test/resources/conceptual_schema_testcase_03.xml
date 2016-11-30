@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<erm>
+    <entitytypes>
+        <entitytype name="Lieferant">
+            <attributes>
+                <attribute name="LieferantenNr" isprimkey="true" notnull="true"/>
+                <attribute name="Firma" isprimkey="false" notnull="true"/>
+                <attribute name="Kontaktperson" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Artikel">
+            <attributes>
+                <attribute name="ArtikelNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+                <attribute name="Liefereinheit" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Kategorie">
+            <attributes>
+                <attribute name="KategorieNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Kunde">
+            <attributes>
+                <attribute name="KundenNr" isprimkey="true" notnull="true"/>
+                <attribute name="Firma" isprimkey="false" notnull="true"/>
+                <attribute name="Kontaktperson" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Bestellung">
+            <attributes>
+                <attribute name="BestellNr" isprimkey="true" notnull="true"/>
+                <attribute name="Bestelldatum" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Personal">
+            <attributes>
+                <attribute name="PersonalNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Versandfirma">
+            <attributes>
+                <attribute name="VerasndfirmaNr" isprimkey="true" notnull="true"/>
+                <attribute name="Firma" isprimkey="false" notnull="true"/>
+                <attribute name="Kontaktperson" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+    </entitytypes>
+
+    <relationtypes>
+        <relationtype name="liefert">
+            <links>
+                <entitylink name="Lieferant" min="0" max="*" functionality="1"/>
+                <entitylink name="Artikel" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="gehört_zu">
+            <links>
+                <entitylink name="Artikel" min="1" max="1" functionality="N"/>
+                <entitylink name="Kategorie" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="besteht_aus">
+            <attributes>
+                <attribute name="Einzelpreis" isprimkey="false" notnull="false"/>
+                <attribute name="Anzahl" isprimkey="false" notnull="false"/>
+                <attribute name="Rabatt" isprimkey="false" notnull="false"/>
+            </attributes>
+            <links>
+                <entitylink name="Artikel" min="0" max="*" functionality="N"/>
+                <entitylink name="Bestellung" min="0" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="bestellt">
+            <links>
+                <entitylink name="Kunde" min="0" max="*" functionality="1"/>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="bearbeitet">
+            <links>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Personal" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="liefert_aus">
+            <links>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Versandfirma" min="1" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+    </relationtypes>
+</erm>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<erm>
+    <entitytypes>
+        <entitytype name="Bestellung">
+            <attributes>
+                <attribute name="Bestell-ID" isprimkey="true" notnull="true"/>
+                <attribute name="Datum" isprimkey="false" notnull="true"/>
+                <attribute name="Uhrzeit" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Kunde">
+            <attributes>
+                <attribute name="KundenNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+                <attribute name="Adresse" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Angebot">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+                <attribute name="Preis" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Angestellter">
+            <attributes>
+                <attribute name="MitarbeiterNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+                <attribute name="Position" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Getränk">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+                <attribute name="Vorrat" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Pizza">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Zutat">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+                <attribute name="Vorrat" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+    </entitytypes>
+
+    <relationtypes>
+        <relationtype name="gibt_auf">
+            <links>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Kunde" min="1" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="umfasst">
+            <links>
+                <entitylink name="Angebot" min="1" max="1" functionality="N"/>
+                <entitylink name="Bestellung" min="1" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="bestellt">
+            <links>
+                <entitylink name="Angebot" min="1" max="1" functionality="N"/>
+                <entitylink name="Kunde" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="bearbeitet">
+            <links>
+                <entitylink name="Bestellung" min="1" max="1" functionality="N"/>
+                <entitylink name="Angestellter" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="erstellt">
+            <links>
+                <entitylink name="Angestellter" min="0" max="*" functionality="N"/>
+                <entitylink name="Angebot" min="1" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="fährt_aus">
+            <links>
+                <entitylink name="Angestellter" min="0" max="*" functionality="N"/>
+                <entitylink name="Angebot" min="1" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="besteht_aus">
+            <links>
+                <entitylink name="Angebot" min="1" max="*" functionality="1"/>
+                <entitylink name="Getränk" min="1" max="1" functionality="M"/>
+                <entitylink name="Pizza" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="besteht_aus">
+            <attributes>
+                <attribute name="Menge" isprimkey="false" notnull="false"/>
+            </attributes>
+            <links>
+                <entitylink name="Zutat" min="0" max="*" functionality="N"/>
+                <entitylink name="Pizza" min="3" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+    </relationtypes>
+</erm>

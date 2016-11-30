@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<erm>
+    <entitytypes>
+        <entitytype name="Land">
+            <attributes>
+                <attribute name="ISO-Code" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Ort">
+            <attributes>
+                <attribute name="OrtID" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Flughafen">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Fluggesellschaft">
+            <attributes>
+                <attribute name="Kürzel" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Attraktion">
+            <attributes>
+                <attribute name="Name" isprimkey="true" notnull="true"/>
+                <attribute name="Beschreibung" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Adresse">
+            <attributes>
+                <attribute name="AdressID" isprimkey="true" notnull="true"/>
+                <attribute name="Straße" isprimkey="false" notnull="true"/>
+                <attribute name="HausNr" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Kunde">
+            <attributes>
+                <attribute name="KundenNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Belegung">
+            <attributes>
+                <attribute name="BelegungsNr" isprimkey="true" notnull="true"/>
+                <attribute name="von" isprimkey="false" notnull="true"/>
+                <attribute name="bis" isprimkey="false" notnull="true"/>
+                <attribute name="Status" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Rechnung">
+            <attributes>
+                <attribute name="RechnungsNr" isprimkey="true" notnull="true"/>
+                <attribute name="Betrag" isprimkey="false" notnull="true"/>
+                <attribute name="Zahlungseingang" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Ferienwohnung">
+            <attributes>
+                <attribute name="FID" isprimkey="true" notnull="true"/>
+                <attribute name="Beschreibung" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Bild">
+            <attributes>
+                <attribute name="BildID" isprimkey="true" notnull="true"/>
+                <attribute name="Beschreibung" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Zusatzausstattung">
+            <attributes>
+                <attribute name="ZusatzID" isprimkey="true" notnull="true"/>
+                <attribute name="Beschreibung" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+    </entitytypes>
+
+    <relationtypes>
+        <relationtype name="liegt_in">
+            <links>
+                <entitylink name="Land" min="0" max="*" functionality="1"/>
+                <entitylink name="Ort" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="entfernt_von">
+            <attributes>
+                <attribute name="km" isprimkey="false" notnull="false"/>
+            </attributes>
+            <links>
+                <entitylink name="Ort" min="0" max="*" functionality="N"/>
+                <entitylink name="Ort" min="0" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="gehört_zu">
+            <links>
+                <entitylink name="Ort" min="0" max="1" functionality="N"/>
+                <entitylink name="Flughafen" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="verbindet">
+            <links>
+                <entitylink name="Flughafen" min="0" max="*" functionality="N"/>
+                <entitylink name="Flughafen" min="0" max="*" functionality="M"/>
+                <entitylink name="Fluggesellschaft" min="0" max="*" functionality="K"/>
+            </links>
+        </relationtype>
+        <relationtype name="besitzt">
+            <links>
+                <entitylink name="Flughafen" min="1" max="1" functionality="1"/>
+                <entitylink name="Adresse" min="0" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="gehört">
+            <links>
+                <entitylink name="Ort" min="1" max="*" functionality="1"/>
+                <entitylink name="Adresse" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="besitzt">
+            <links>
+                <entitylink name="Attraktion" min="1" max="1" functionality="1"/>
+                <entitylink name="Adresse" min="0" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="hat">
+            <links>
+                <entitylink name="Kunde" min="0" max="1" functionality="1"/>
+                <entitylink name="Adresse" min="0" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="tätigt">
+            <links>
+                <entitylink name="Kunde" min="0" max="*" functionality="1"/>
+                <entitylink name="Belegung" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="erstellt">
+            <links>
+                <entitylink name="Belegung" min="0" max="1" functionality="1"/>
+                <entitylink name="Rechnung" min="1" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="belegt">
+            <links>
+                <entitylink name="Belegung" min="1" max="1" functionality="N"/>
+                <entitylink name="Ferienwohnung" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="befindet_sich">
+            <links>
+                <entitylink name="Adresse" min="0" max="1" functionality="1"/>
+                <entitylink name="Ferienwohnung" min="1" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="hat">
+            <links>
+                <entitylink name="Ferienwohnung" min="0" max="4" functionality="1"/>
+                <entitylink name="Bild" min="1" max="1" functionality="N"/>
+            </links>
+        </relationtype>
+        <relationtype name="hat_ZA">
+            <links>
+                <entitylink name="Ferienwohnung" min="0" max="*" functionality="N"/>
+                <entitylink name="Zusatzausstattung" min="1" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+    </relationtypes>
+</erm>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<erm>
+    <entitytypes>
+        <entitytype name="Adressen">
+            <attributes>
+                <attribute name="AdressID" isprimkey="true" notnull="true"/>
+                <attribute name="Straße" isprimkey="false" notnull="true"/>
+                <attribute name="HausNr" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Studenten">
+            <attributes>
+                <attribute name="MatrikelNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Vorlesungen">
+            <attributes>
+                <attribute name="VorlesungsNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+                <attribute name="ECTS" isprimkey="false" notnull="false"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Professoren">
+            <attributes>
+                <attribute name="ProfessorNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+        <entitytype name="Angestellte">
+            <attributes>
+                <attribute name="MitarbeiterNr" isprimkey="true" notnull="true"/>
+                <attribute name="Name" isprimkey="false" notnull="true"/>
+            </attributes>
+        </entitytype>
+    </entitytypes>
+
+    <relationtypes>
+        <relationtype name="wohnen">
+            <links>
+                <entitylink name="Adressen" min="1" max="1" functionality="1"/>
+                <entitylink name="Studenten" min="1" max="1" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="hören">
+            <links>
+                <entitylink name="Studenten" min="0" max="*" functionality="N"/>
+                <entitylink name="Vorlesungen" min="3" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="vorraussetzen">
+            <links>
+                <entitylink name="Vorlesungen" min="0" max="*" functionality="N"/>
+                <entitylink name="Vorlesungen" min="0" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="prüfen">
+            <links>
+                <entitylink name="Studenten" min="0" max="*" functionality="N"/>
+                <entitylink name="Vorlesungen" min="0" max="*" functionality="1"/>
+                <entitylink name="Professoren" min="0" max="*" functionality="M"/>
+            </links>
+        </relationtype>
+        <relationtype name="lesen">
+            <links>
+                <entitylink name="Vorlesungen" min="1" max="1" functionality="N"/>
+                <entitylink name="Professoren" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+        <relationtype name="arbeiten_für">
+            <links>
+                <entitylink name="Angestellte" min="1" max="1" functionality="N"/>
+                <entitylink name="Professoren" min="0" max="*" functionality="1"/>
+            </links>
+        </relationtype>
+    </relationtypes>
+</erm>
