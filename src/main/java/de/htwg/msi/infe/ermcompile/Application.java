@@ -23,8 +23,9 @@ public class Application {
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
             RelationResolver rr = new RelationResolver(erm);
-           // erm.getTables().get(erm.getTables().size()-1).addAttribute(new FK("TEst","abc"));
-           // TestXMLCreator(erm);
+            //erm.getTables().get(erm.getTables().size()-1).addAlternateKey(new AK(erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
+            //erm.getTables().get(erm.getTables().size()-1).addForeignKey(new FK("test",erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1),erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
+            //TestXMLCreator(erm);
 
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());

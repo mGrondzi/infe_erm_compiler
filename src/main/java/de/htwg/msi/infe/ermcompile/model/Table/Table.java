@@ -1,5 +1,6 @@
 package de.htwg.msi.infe.ermcompile.model.Table;
 
+import de.htwg.msi.infe.ermcompile.XMLAdapter.AttributeXMLAdapter;
 import de.htwg.msi.infe.ermcompile.XMLAdapter.KeyXMLAdapter;
 import de.htwg.msi.infe.ermcompile.model.Attribute.AK;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
@@ -20,12 +21,11 @@ public abstract class Table {
     @NonNull
     @XmlAttribute
     private String name;
-    @XmlElementWrapper(name="attrributes")
+    @XmlElementWrapper(name="attributes")
     @XmlElements({
             @XmlElement(name="attribute",type = Attribute.class),
-            @XmlElement(name="attribute",type = PK.class),
-            @XmlElement(name="attribute",type = FK.class),
-            @XmlElement(name="attribute",type = AK.class)})
+            @XmlElement(name="attribute",type = PK.class)})
+    @XmlJavaTypeAdapter(AttributeXMLAdapter.class)
     private ArrayList<Attribute> attributes;
     @XmlElementWrapper(name="primaryKey")
     @XmlElement(name = "attribute")
@@ -33,10 +33,10 @@ public abstract class Table {
     private List<PK> pkKeys = null;
     @XmlElementWrapper(name="alternateKeys")
     @XmlElement(name = "alternateKey",nillable = true)
-    private List<AK> akKeys = null;
+    private List<AK> akKeys;
     @XmlElementWrapper(name="foreignKeys")
     @XmlElement(name = "foreignKey",nillable = true)
-    @XmlJavaTypeAdapter(KeyXMLAdapter.class)
+   // @XmlJavaTypeAdapter(KeyXMLAdapter.class)
     private List<FK> fkKeys = null;
 
     public Table(String name, ArrayList<Attribute> attributes) {
@@ -63,16 +63,6 @@ public abstract class Table {
                 this.pkKeys = new ArrayList<PK>();
             this.pkKeys.add((PK) a);
         }
-        else if (a instanceof AK){
-            if(this.akKeys == null)
-                this.akKeys = new ArrayList<AK>();
-            this.akKeys.add((AK) a);
-        }
-        else if (a instanceof  FK){
-            if(this.fkKeys == null)
-                this.fkKeys = new ArrayList<FK>();
-            this.fkKeys.add((FK) a);
-        }
     }
 
     public void addAttribute(Attribute attribute){
@@ -80,8 +70,19 @@ public abstract class Table {
         CheckIfKey(attribute);
     }
 
+    public void addForeignKey(FK fk){
+        if(this.fkKeys == null)
+            fkKeys = new ArrayList<FK>();
+        this.fkKeys.add(fk);
+    }
+
+    public void addAlternateKey(AK ak){
+        if(this.akKeys == null)
+            akKeys = new ArrayList<AK>();
+        this.akKeys.add(ak);
+    }
+
     public void removeAttribute(Attribute attribute){
-        this.attributes.remove(attribute);
         if(this.pkKeys.contains(attribute))
             this.pkKeys.remove(attribute);
     }
