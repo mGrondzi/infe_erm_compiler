@@ -1,10 +1,7 @@
 package de.htwg.msi.infe.ermcompile;
 
 import de.htwg.msi.infe.ermcompile.logic.RelationResolver;
-import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
-import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
-import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.utils.XmlSaxHandler;
 
 import javax.xml.bind.JAXBContext;
@@ -13,7 +10,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.util.ArrayList;
 
 public class Application {
 
@@ -27,8 +23,9 @@ public class Application {
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
             RelationResolver rr = new RelationResolver(erm);
+           // erm.getTables().get(erm.getTables().size()-1).addAttribute(new FK("TEst","abc"));
+           // TestXMLCreator(erm);
 
-            //TestXMLCreator(erm);
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
             System.out.println("1st. Entity: " + handler.getEntityTypeXMLList().get(0).getName());
@@ -55,7 +52,7 @@ public class Application {
 //        erm.addTable(new Entitytype("Test2", attributeArrayList));
 
 
-        File file = new File("C:\\Users\\manue\\Documents\\file.xml");
+        //File file = new File("C:\\Users\\manue\\Documents\\file.xml");
         JAXBContext jaxbContext = null;
         try {
 
@@ -65,7 +62,7 @@ public class Application {
             // output pretty printed
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            jaxbMarshaller.marshal(erm, file);
+           // jaxbMarshaller.marshal(erm, file);
             jaxbMarshaller.marshal(erm, System.out);
 
         } catch (JAXBException e) {

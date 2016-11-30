@@ -1,8 +1,10 @@
 package de.htwg.msi.infe.ermcompile.model.Table;
 
 import de.htwg.msi.infe.ermcompile.XMLAdapter.KeyXMLAdapter;
-import de.htwg.msi.infe.ermcompile.model.Attribute.*;
-import de.htwg.msi.infe.ermcompile.model.EntityLink;
+import de.htwg.msi.infe.ermcompile.model.Attribute.AK;
+import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
+import de.htwg.msi.infe.ermcompile.model.Attribute.FK;
+import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -27,12 +29,14 @@ public abstract class Table {
     private ArrayList<Attribute> attributes;
     @XmlElementWrapper(name="primaryKey")
     @XmlElement(name = "attribute")
+    @XmlJavaTypeAdapter(KeyXMLAdapter.class)
     private List<PK> pkKeys = null;
     @XmlElementWrapper(name="alternateKeys")
     @XmlElement(name = "alternateKey",nillable = true)
     private List<AK> akKeys = null;
     @XmlElementWrapper(name="foreignKeys")
     @XmlElement(name = "foreignKey",nillable = true)
+    @XmlJavaTypeAdapter(KeyXMLAdapter.class)
     private List<FK> fkKeys = null;
 
     public Table(String name, ArrayList<Attribute> attributes) {

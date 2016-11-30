@@ -1,13 +1,12 @@
 package de.htwg.msi.infe.ermcompile.model.Table;
 
-import de.htwg.msi.infe.ermcompile.model.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import lombok.Getter;
 import lombok.NonNull;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * representation of Relationtype
@@ -21,7 +20,7 @@ public class Relationtype extends Table{
     @XmlElement(name = "link")
     private ArrayList<EntityLink> links;
 
-    public Relationtype(String name, List<Attribute> attributes, ArrayList<EntityLink> links) {
+    public Relationtype(String name, ArrayList<Attribute> attributes, ArrayList<EntityLink> links) {
         super(name, attributes);
         this.links = links;
     }

@@ -1,4 +1,4 @@
-package de.htwg.msi.infe.ermcompile.model;
+package de.htwg.msi.infe.ermcompile.model.Table;
 
 
 import lombok.Getter;

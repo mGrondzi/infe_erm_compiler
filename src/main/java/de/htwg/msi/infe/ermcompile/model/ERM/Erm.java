@@ -1,16 +1,11 @@
 package de.htwg.msi.infe.ermcompile.model.ERM;
 
-import de.htwg.msi.infe.ermcompile.XMLAdapter.KeyXMLAdapter;
-import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
-import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
 import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 
 @XmlRootElement

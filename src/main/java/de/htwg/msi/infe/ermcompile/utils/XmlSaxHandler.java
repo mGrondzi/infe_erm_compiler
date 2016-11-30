@@ -2,9 +2,9 @@ package de.htwg.msi.infe.ermcompile.utils;
 
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
-import de.htwg.msi.infe.ermcompile.model.Cardinality;
+import de.htwg.msi.infe.ermcompile.model.Table.Cardinality;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
-import de.htwg.msi.infe.ermcompile.model.EntityLink;
+import de.htwg.msi.infe.ermcompile.model.Table.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
