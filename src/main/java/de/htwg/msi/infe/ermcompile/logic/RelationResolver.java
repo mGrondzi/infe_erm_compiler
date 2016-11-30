@@ -53,7 +53,6 @@ public class RelationResolver {
                     //
                     this.Solve1to1(rt, leftEntity, rightEntity);
                     this.originalErm.removeTable(this.originalErm.getTables().indexOf(rightEntity));
-                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 } else {
                     /*
                     Case [L](1,1)--[]--(0,1)[R]
@@ -63,29 +62,26 @@ public class RelationResolver {
                         2. Add key as FK to L
                      */
                     this.SolveNto1(rt, leftEntity, rightEntity);
-                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 }
             } else {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
                     //Case [L](0,1)--[]--(1,1)[R]
                     //TODO Packe PK von L als FK in R
                     this.SolveNto1(rt, rightEntity, leftEntity);
-                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 } else {
                     //Case [L](0,1)--[]--(0,1)[R]
                     //TODO Erstelle Neue Tabelle PK ist PK(L)+PK(R)
-
+                    this.ResloveNtoM(rt, leftEntity, rightEntity);
                 }
             }
-
         } else if (linkLeft.getFunctionality().equals("1") && linkRight.getFunctionality().equals("N")) {
-
+            this.SolveNto1(rt, rightEntity, leftEntity);
         } else if (linkLeft.getFunctionality().equals("N") && linkRight.getFunctionality().equals("1")) {
-
+            this.SolveNto1(rt, leftEntity, rightEntity);
         } else {// N M
             this.ResloveNtoM(rt, leftEntity, rightEntity);
-            this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
         }
+        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
     }
 
     private void Solve1to1(Relationtype rt, Entitytype leftEntity, Entitytype rightEntity) {
