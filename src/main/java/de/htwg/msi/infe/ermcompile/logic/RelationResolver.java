@@ -1,6 +1,8 @@
 package de.htwg.msi.infe.ermcompile.logic;
 
+import de.htwg.msi.infe.ermcompile.model.Attribute.AK;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
+import de.htwg.msi.infe.ermcompile.model.Attribute.FK;
 import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.Table.EntityLink;
@@ -53,34 +55,46 @@ public class RelationResolver {
                     Step:
                         1. Get all attributes from RIGHT and LINK table
                         2. Add them to LEFT table
+                        4. Add all PK's from RIGHT as AK's to LEFT
                         3. Delete RIGHT and LINK table from erm
                      */
                     ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
                     ArrayList<Attribute> linkAttributes = rt.getAttributes();
 
+                    leftEntity.addAlternateKey(new AK((ArrayList) rightEntity.getPkKeys()));
                     for (Attribute attribute : rightAttributes) {
-                        if (attribute instanceof PK) {
-                            leftEntity.addAttribute(new PK(attribute.getName()));
-
-                        } else {
+                        if (attribute instanceof PK){
+                            Attribute temp = new Attribute(attribute.getName(),attribute.isNotNull());
+                            leftEntity.addAttribute(temp);
+                        }else {
                             leftEntity.addAttribute(attribute);
                         }
                     }
 
-                    for (Attribute attribute : linkAttributes) {
-                        if (attribute instanceof PK) {
-                            leftEntity.addAttribute(new PK(attribute.getName()));
 
-                        } else {
+                    for(Attribute attribute: linkAttributes){
+//                        if (attribute instanceof PK){
+//                            leftEntity.addAttribute(new PK(attribute.getName()));
+//
+//                        } else {
                             leftEntity.addAttribute(attribute);
-                        }
+//                        }
                     }
                     this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
                     this.erm.removeTable(this.erm.getTables().indexOf(rt));
 
                 } else {
-                    //Case [L](1,1)--[]--(0,1)[R]
-                    //TODO Packe PK von R als FK in L
+                    /*
+                    Case [L](1,1)--[]--(0,1)[R]
+                    Goal: Packe PK von R als FK in L
+                    Step:
+                        1. Get PK from R
+                        2. Add key as FK to L
+                     */
+
+                    //leftEntity.addAttribute(new FK(attribute.getName()));
+
+
                 }
             } else {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {

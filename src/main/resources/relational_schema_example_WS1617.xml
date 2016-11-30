@@ -32,7 +32,7 @@
     <relationtypes>
         <relationtype name="bz1">
             <attributes>
-                <attribute name="bz1_1" isprimkey="true" notnull="true"/>
+                <attribute name="bz1_1" isprimkey="false" notnull="true"/>
                 <attribute name="bz1_2" isprimkey="false" notnull="false"/>
                 <attribute name="bz1_3" isprimkey="false" notnull="true"/>
             </attributes>
