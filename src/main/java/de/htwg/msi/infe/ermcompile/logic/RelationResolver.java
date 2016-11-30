@@ -1,11 +1,13 @@
 package de.htwg.msi.infe.ermcompile.logic;
 
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
+import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.Table.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
+import javafx.scene.control.Tab;
 
 import java.util.ArrayList;
 
@@ -45,18 +47,36 @@ public class RelationResolver {
         if (linkLeft.getFunctionality().equals("1") && linkRight.getFunctionality().equals("1")) {
             if (linkLeft.getCardinality().getMin().equals("1") && linkLeft.getCardinality().getMax().equals("1")) {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
-                    //Case [L](1,1)--[]--(1,1)[R]
-                    //TODO Fasse beide in einer Zusammen
+                    /*
+                    Case [L](1,1)--[]--(1,1)[R]
+                    Goal: Fasse beide in einer Zusammen
+                    Step:
+                        1. Get all attributes from RIGHT and LINK table
+                        2. Add them to LEFT table
+                        3. Delete RIGHT and LINK table from erm
+                     */
                     ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
+                    ArrayList<Attribute> linkAttributes = rt.getAttributes();
 
-                    for(Attribute attribute: rightAttributes){
-                        leftEntity.addAttribute(attribute);
+                    for (Attribute attribute : rightAttributes) {
+                        if (attribute instanceof PK) {
+                            leftEntity.addAttribute(new PK(attribute.getName()));
+
+                        } else {
+                            leftEntity.addAttribute(attribute);
+                        }
                     }
 
-                    /* 1. Erstelle neuen PK aus Kombination der PK's beider Tabellen
-                       2. Lösche rechte Tabelle
-                     */
+                    for (Attribute attribute : linkAttributes) {
+                        if (attribute instanceof PK) {
+                            leftEntity.addAttribute(new PK(attribute.getName()));
 
+                        } else {
+                            leftEntity.addAttribute(attribute);
+                        }
+                    }
+                    this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
+                    this.erm.removeTable(this.erm.getTables().indexOf(rt));
 
                 } else {
                     //Case [L](1,1)--[]--(0,1)[R]
@@ -69,6 +89,7 @@ public class RelationResolver {
                 } else {
                     //Case [L](0,1)--[]--(0,1)[R]
                     //TODO Erstelle Neue Tabelle PK ist PK(L)+PK(R)
+
                 }
             }
 

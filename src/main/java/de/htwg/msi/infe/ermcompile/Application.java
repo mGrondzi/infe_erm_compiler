@@ -23,6 +23,7 @@ public class Application {
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
             RelationResolver rr = new RelationResolver(erm);
+            rr.resolve();
             //erm.getTables().get(erm.getTables().size()-1).addAlternateKey(new AK(erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
             //erm.getTables().get(erm.getTables().size()-1).addForeignKey(new FK("test",erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1),erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
             //TestXMLCreator(erm);
