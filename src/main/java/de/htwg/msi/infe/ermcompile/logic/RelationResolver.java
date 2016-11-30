@@ -19,18 +19,14 @@ import java.util.ArrayList;
 public class RelationResolver {
 
     private Erm erm;
-    private ArrayList<Table> rtables = new ArrayList<Table>();
 
     public RelationResolver(Erm erm) {
         this.erm = erm;
-        this.rtables = this.erm.getTables();
     }
 
     public void resolve() {
 
-        this.rtables = this.extractRelationTypes(rtables);
-
-        for (Table table : this.rtables) {
+        for (Table table : this.erm.getRelationtypes()) {
             if (this.isRLBinary((Relationtype) table)) {
                 this.combineBinaryRelation((Relationtype) table);
             } else {
