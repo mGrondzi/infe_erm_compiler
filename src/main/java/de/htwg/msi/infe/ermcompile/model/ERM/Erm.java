@@ -1,5 +1,6 @@
 package de.htwg.msi.infe.ermcompile.model.ERM;
 
+import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
 import lombok.Getter;
 
@@ -24,6 +25,18 @@ public class Erm {
     public void removeTable(Table table){
         if(this.tables.contains(table))
             this.tables.remove(table);
+    }
+
+    public ArrayList<Relationtype> getRelationtypes(){
+        ArrayList<Relationtype> rts = new ArrayList<Relationtype>();
+
+        for(Table table: this.getTables()){
+            if(table instanceof Relationtype){
+                rts.add((Relationtype) table);
+            }
+        }
+
+        return rts;
     }
 
 }
