@@ -11,6 +11,8 @@ import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
 import javafx.scene.control.Tab;
 
+import javax.management.relation.Relation;
+import javax.management.relation.RelationType;
 import java.util.ArrayList;
 
 /**
@@ -45,42 +47,8 @@ public class RelationResolver {
         if (linkLeft.getFunctionality().equals("1") && linkRight.getFunctionality().equals("1")) {
             if (linkLeft.getCardinality().getMin().equals("1") && linkLeft.getCardinality().getMax().equals("1")) {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
-                    /*
-                    Case [L](1,1)--[]--(1,1)[R]
-                    Goal: Fasse beide in einer Zusammen
-                    Step:
-                        1. Get all attributes from RIGHT and LINK table
-                        2. Add them to LEFT table
-                        4. Add all PK's from RIGHT as AK's to LEFT
-                        3. Delete RIGHT and LINK table from erm
-                     */
-                    ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
-                    ArrayList<Attribute> linkAttributes = rt.getAttributes();
 
-                    leftEntity.addAlternateKey(new AK((ArrayList) rightEntity.getPkKeys()));
-                    //TODO Add FK's of RIGHT as FK's to LEFT
-                    for (Attribute attribute1 : rightAttributes) {
-                        if (attribute1 instanceof PK) {
-                            Attribute temp = new Attribute(attribute1.getName(), attribute1.isNotNull());
-                            leftEntity.addAttribute(temp);
-                        } else {
-                            leftEntity.addAttribute(attribute1);
-                        }
-                    }
-
-                    leftEntity.addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
-                    for (Attribute attribute2 : linkAttributes) {
-                        if (attribute2 instanceof PK) {
-                            Attribute temp = new Attribute(attribute2.getName(), attribute2.isNotNull());
-                            leftEntity.addAttribute(temp);
-                        } else {
-                            leftEntity.addAttribute(attribute2);
-                        }
-                    }
-
-                    this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
-                    this.erm.removeTable(this.erm.getTables().indexOf(rt));
-                    this.relinkingBinaryRelations(leftEntity, rightEntity);
+                    this.combineBinary1to1(rt, leftEntity, rightEntity);
 
                 } else {
                     /*
@@ -114,6 +82,47 @@ public class RelationResolver {
 
         }
     }
+
+    /**
+     * Case [L](1,1)--[]--(1,1)[R]
+     * Goal: Fasse beide in einer Zusammen
+     * Step:
+     * 1. Get all attributes from RIGHT and LINK table
+     * 2. Add them to LEFT table
+     * 4. Add all PK's from RIGHT as AK's to LEFT
+     * 3. Delete RIGHT and LINK table from erm
+     */
+    private void combineBinary1to1(Relationtype rt, Entitytype leftEntity, Entitytype rightEntity) {
+
+        ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
+        ArrayList<Attribute> linkAttributes = rt.getAttributes();
+
+        leftEntity.addAlternateKey(new AK((ArrayList) rightEntity.getPkKeys()));
+        //TODO Add FK's of RIGHT as FK's to LEFT
+        for (Attribute attribute1 : rightAttributes) {
+            if (attribute1 instanceof PK) {
+                Attribute temp = new Attribute(attribute1.getName(), attribute1.isNotNull());
+                leftEntity.addAttribute(temp);
+            } else {
+                leftEntity.addAttribute(attribute1);
+            }
+        }
+
+        leftEntity.addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
+        for (Attribute attribute2 : linkAttributes) {
+            if (attribute2 instanceof PK) {
+                Attribute temp = new Attribute(attribute2.getName(), attribute2.isNotNull());
+                leftEntity.addAttribute(temp);
+            } else {
+                leftEntity.addAttribute(attribute2);
+            }
+        }
+
+        this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
+        this.erm.removeTable(this.erm.getTables().indexOf(rt));
+        this.relinkingBinaryRelations(leftEntity, rightEntity);
+    }
+
 
     public ArrayList<Table> extractEntityTypes(ArrayList<Table> list) {
         ArrayList<Table> en = new ArrayList<Table>();
