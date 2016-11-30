@@ -26,7 +26,7 @@ public class Application {
             erm = rr.resolve();
             //erm.getTables().get(erm.getTables().size()-1).addAlternateKey(new AK(erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
             //erm.getTables().get(erm.getTables().size()-1).addForeignKey(new FK("test",erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1),erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
-            TestXMLCreator(erm);
+            //TestXMLCreator(erm);
 
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());

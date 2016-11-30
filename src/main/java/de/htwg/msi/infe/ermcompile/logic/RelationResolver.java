@@ -9,8 +9,6 @@ import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
 
-import javax.management.relation.Relation;
-import javax.management.relation.RelationType;
 import java.util.ArrayList;
 
 public class RelationResolver {
