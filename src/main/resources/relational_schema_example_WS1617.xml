@@ -49,9 +49,9 @@
                 <attribute name="att6" isprimkey="false" notnull="true"/>
             </attributes>
             <links>
-                <entitylink name="bar" min="" max="" functionality=""/>
-                <entitylink name="foo" min="" max="" functionality=""/>
-                <entitylink name="qwer" min="" max="" functionality=""/>
+                <entitylink name="b" min="0" max="1" functionality="N"/>
+                <entitylink name="c" min="3" max="4" functionality="1"/>
+                <!--<entitylink name="qwer" min="" max="" functionality=""/>-->
             </links>
         </relationtype>
     </relationtypes>

@@ -71,7 +71,7 @@ public class RelationResolver {
                         }
                     }
 
-
+                    leftEntity.addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
                     for(Attribute attribute: linkAttributes){
 //                        if (attribute instanceof PK){
 //                            leftEntity.addAttribute(new PK(attribute.getName()));
@@ -82,6 +82,9 @@ public class RelationResolver {
                     }
                     this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
                     this.erm.removeTable(this.erm.getTables().indexOf(rt));
+
+                    this.relinkingBinaryRelations(leftEntity,rightEntity);
+
 
                 } else {
                     /*
@@ -148,4 +151,16 @@ public class RelationResolver {
         return false;
     }
 
+    private void relinkingBinaryRelations (Entitytype newTable, Entitytype deletedTable) {
+        ArrayList<Relationtype> rts = this.erm.getRelationtypes();
+        for(Relationtype relation: rts){
+            if(relation.getLinks().get(0).getEnititytype().getName().equals(deletedTable.getName())){
+                relation.getLinks().add(new EntityLink(newTable, relation.getLinks().get(0).getCardinality(), relation.getLinks().get(0).getFunctionality()));
+                relation.getLinks().remove(0);
+            }else if(relation.getLinks().get(1).getEnititytype().getName().equals(deletedTable.getName())){
+                relation.getLinks().add(new EntityLink(newTable, relation.getLinks().get(1).getCardinality(), relation.getLinks().get(1).getFunctionality()));
+                relation.getLinks().remove(1);
+            }
+        }
+    }
 }
