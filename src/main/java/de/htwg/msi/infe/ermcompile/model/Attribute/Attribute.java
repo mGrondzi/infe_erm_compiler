@@ -25,4 +25,9 @@ public class Attribute {
         this.name = name;
         this.notNull = notnull;
     }
+
+    public Attribute(Attribute attribute) {
+        this.name = attribute.getName();
+        this.notNull = attribute.isNotNull();
+    }
 }

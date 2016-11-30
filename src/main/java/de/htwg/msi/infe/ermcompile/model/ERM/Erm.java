@@ -21,4 +21,9 @@ public class Erm {
     public void removeTable(int pos){
         getTables().remove(pos);}
 
+    public void removeTable(Table table){
+        if(this.tables.contains(table))
+            this.tables.remove(table);
+    }
+
 }
