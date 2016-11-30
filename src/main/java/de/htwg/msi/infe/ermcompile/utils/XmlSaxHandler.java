@@ -88,7 +88,6 @@ public class XmlSaxHandler extends DefaultHandler {
             Relationtype relationtype = (Relationtype) this.erm.getTables().get(this.erm.getTables().size() - 1);
             for (Table t : this.erm.getTables()) {
                 if (t.getName().equals(attributes.getValue(this.name))) {
-                    System.out.println(t.getName());
                     relationtype.addEntityLink(new EntityLink((Entitytype) t, new Cardinality(attributes.getValue(this.min),
                             attributes.getValue(this.max)), attributes.getValue(this.funct)));
                 }
