@@ -23,10 +23,10 @@ public class Application {
             saxParser.parse(inputFile, handler);
             Erm erm = handler.getErm();
             RelationResolver rr = new RelationResolver(erm);
-            rr.resolve();
+            erm = rr.resolve();
             //erm.getTables().get(erm.getTables().size()-1).addAlternateKey(new AK(erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
             //erm.getTables().get(erm.getTables().size()-1).addForeignKey(new FK("test",erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1),erm.getTables().get(erm.getTables().size()-1).getAttributes().get(1)));
-            //TestXMLCreator(erm);
+            TestXMLCreator(erm);
 
 
             /*System.out.println("\nnumber of Entitys: " + handler.getEntityTypeXMLList().size());
@@ -54,7 +54,7 @@ public class Application {
 //        erm.addTable(new Entitytype("Test2", attributeArrayList));
 
 
-        //File file = new File("C:\\Users\\manue\\Documents\\file.xml");
+        File file = new File("C:\\Users\\Nexoc\\Documents\\file.xml");
         JAXBContext jaxbContext = null;
         try {
 
@@ -64,7 +64,7 @@ public class Application {
             // output pretty printed
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-           // jaxbMarshaller.marshal(erm, file);
+            jaxbMarshaller.marshal(erm, file);
             jaxbMarshaller.marshal(erm, System.out);
 
         } catch (JAXBException e) {

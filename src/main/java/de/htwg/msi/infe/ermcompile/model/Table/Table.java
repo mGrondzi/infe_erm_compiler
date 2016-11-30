@@ -12,7 +12,6 @@ import lombok.NonNull;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Getter
@@ -30,14 +29,14 @@ public abstract class Table {
     @XmlElementWrapper(name="primaryKey")
     @XmlElement(name = "attribute")
     @XmlJavaTypeAdapter(KeyXMLAdapter.class)
-    private List<PK> pkKeys = null;
+    private ArrayList<PK> pkKeys = null;
     @XmlElementWrapper(name="alternateKeys")
     @XmlElement(name = "alternateKey",nillable = true)
-    private List<AK> akKeys;
+    private ArrayList<AK> akKeys = null;
     @XmlElementWrapper(name="foreignKeys")
     @XmlElement(name = "foreignKey",nillable = true)
    // @XmlJavaTypeAdapter(KeyXMLAdapter.class)
-    private List<FK> fkKeys = null;
+    private ArrayList<FK> fkKeys = null;
 
     public Table(String name, ArrayList<Attribute> attributes) {
         this.name = name;

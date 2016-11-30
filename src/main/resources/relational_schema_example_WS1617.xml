@@ -14,7 +14,7 @@
         <entitytype name="b">
             <attributes>
                 <attribute name="b1" isprimkey="true" notnull="true"/>
-                <attribute name="b2" isprimkey="false" notnull="false"/>
+                <attribute name="b2" isprimkey="true" notnull="false"/>
                 <attribute name="b3" isprimkey="false" notnull="true"/>
             </attributes>
         </entitytype>
@@ -31,14 +31,9 @@
 
     <relationtypes>
         <relationtype name="bz1">
-            <attributes>
-                <attribute name="bz1_1" isprimkey="true" notnull="true"/>
-                <attribute name="bz1_2" isprimkey="false" notnull="false"/>
-                <attribute name="bz1_3" isprimkey="false" notnull="true"/>
-            </attributes>
             <links>
                 <entitylink name="a" min="1" max="1" functionality="1"/>
-                <entitylink name="b" min="1" max="1" functionality="1"/>
+                <entitylink name="b" min="0" max="1" functionality="1"/>
             </links>
         </relationtype>
 
@@ -49,8 +44,8 @@
                 <attribute name="att6" isprimkey="false" notnull="true"/>
             </attributes>
             <links>
-                <entitylink name="b" min="0" max="1" functionality="N"/>
-                <entitylink name="c" min="3" max="4" functionality="1"/>
+                <entitylink name="a" min="1" max="1" functionality="1"/>
+                <entitylink name="c" min="0" max="1" functionality="1"/>
                 <!--<entitylink name="qwer" min="" max="" functionality=""/>-->
             </links>
         </relationtype>

@@ -26,4 +26,8 @@ public class EntityLink {
         this.functionality = functionality;
         this.cardinality = cardinality;
     }
+
+    public void changeEntityType(Entitytype enititytype){
+        this.enititytype = enititytype;
+    }
 }

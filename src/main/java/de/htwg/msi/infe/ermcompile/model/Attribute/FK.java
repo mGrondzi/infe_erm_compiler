@@ -37,6 +37,14 @@ public class FK {
         this.addForeignKeyPair(attribute,referencedAttribute);
     }
 
+    public FK(String referencedTableName, ArrayList<Attribute> referencedAttributes){
+        this.attributes = new ArrayList<Attribute>();
+        for(Attribute a : referencedAttributes)
+            this.attributes.add(new Attribute(a.getName() + "_FK", a.isNotNull()));
+        this.referencedTableName=referencedTableName;
+        this.referencedAttributes = referencedAttributes;
+    }
+
     public void addForeignKeyPair(Attribute attribute, Attribute referencedAttribute){
         this.attributes.add(attribute);
         this.referencedAttributes.add(referencedAttribute);

@@ -3,36 +3,31 @@ package de.htwg.msi.infe.ermcompile.logic;
 import de.htwg.msi.infe.ermcompile.model.Attribute.AK;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.FK;
-import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.Table.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
 import de.htwg.msi.infe.ermcompile.model.Table.Relationtype;
 import de.htwg.msi.infe.ermcompile.model.Table.Table;
-import javafx.scene.control.Tab;
 
 import java.util.ArrayList;
 
-/**
- * Created by phili on 29.11.2016.
- */
 public class RelationResolver {
 
-    private Erm erm;
+    private Erm originalErm;
 
     public RelationResolver(Erm erm) {
-        this.erm = erm;
+        this.originalErm = erm;
     }
 
-    public void resolve() {
-
-        for (Table table : this.erm.getRelationtypes()) {
+    public Erm resolve() {
+        for (Table table : this.originalErm.getRelationtypes()) {
             if (this.isRLBinary((Relationtype) table)) {
                 this.combineBinaryRelation((Relationtype) table);
             } else {
                 // combine ternary relations
             }
         }
+        return  this.originalErm;
     }
 
     private void combineBinaryRelation(Relationtype rt) {
@@ -52,36 +47,10 @@ public class RelationResolver {
                         1. Get all attributes from RIGHT and LINK table
                         2. Add them to LEFT table
                         4. Add all PK's from RIGHT as AK's to LEFT
-                        3. Delete RIGHT and LINK table from erm
+                        3. Delete RIGHT and LINK table from originalErm
                      */
-                    ArrayList<Attribute> rightAttributes = rightEntity.getAttributes();
-                    ArrayList<Attribute> linkAttributes = rt.getAttributes();
-
-                    leftEntity.addAlternateKey(new AK((ArrayList) rightEntity.getPkKeys()));
-                    //TODO Add FK's of RIGHT as FK's to LEFT
-                    for (Attribute attribute1 : rightAttributes) {
-                        if (attribute1 instanceof PK) {
-                            Attribute temp = new Attribute(attribute1.getName(), attribute1.isNotNull());
-                            leftEntity.addAttribute(temp);
-                        } else {
-                            leftEntity.addAttribute(attribute1);
-                        }
-                    }
-
-                    leftEntity.addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
-                    for (Attribute attribute2 : linkAttributes) {
-                        if (attribute2 instanceof PK) {
-                            Attribute temp = new Attribute(attribute2.getName(), attribute2.isNotNull());
-                            leftEntity.addAttribute(temp);
-                        } else {
-                            leftEntity.addAttribute(attribute2);
-                        }
-                    }
-
-                    this.erm.removeTable(this.erm.getTables().indexOf(rightEntity));
-                    this.erm.removeTable(this.erm.getTables().indexOf(rt));
-                    this.relinkingBinaryRelations(leftEntity, rightEntity);
-
+                    //
+                    this.Solve1to1(rt,leftEntity,rightEntity);
                 } else {
                     /*
                     Case [L](1,1)--[]--(0,1)[R]
@@ -90,15 +59,13 @@ public class RelationResolver {
                         1. Get PK from R
                         2. Add key as FK to L
                      */
-
-                    //leftEntity.addAttribute(new FK(attribute.getName()));
-
-
+                    this.SolveNto1(rt,leftEntity,rightEntity);
                 }
             } else {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
                     //Case [L](0,1)--[]--(1,1)[R]
                     //TODO Packe PK von L als FK in R
+                    this.Solve1to1(rt,rightEntity,leftEntity);
                 } else {
                     //Case [L](0,1)--[]--(0,1)[R]
                     //TODO Erstelle Neue Tabelle PK ist PK(L)+PK(R)
@@ -115,21 +82,63 @@ public class RelationResolver {
         }
     }
 
-    public ArrayList<Table> extractEntityTypes(ArrayList<Table> list) {
-        ArrayList<Table> en = new ArrayList<Table>();
-        for (Table table : list) {
+    private void Solve1to1(Relationtype rt, Entitytype leftEntity, Entitytype rightEntity){
+        if(!rt.getAttributes().isEmpty()) {
+            this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
+            for (Attribute attribute : rt.getAttributes()) {
+                this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(new Attribute(attribute));
+            }
+        }
+
+        this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAlternateKey(new AK((ArrayList) rightEntity.getPkKeys()));
+        //TODO Add FK's of RIGHT as FK's to LEFT
+        for (Attribute attribute : this.originalErm.getTables().get(this.originalErm.getTables().indexOf(rightEntity)).getAttributes()) {
+            this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(new Attribute(attribute));
+        }
+
+        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rightEntity));
+        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
+        this.relinkingBinaryRelations(leftEntity, rightEntity);
+    }
+
+    private void SolveNto1(Relationtype rt, Entitytype leftEntity, Entitytype rightEntity){
+        if(!rt.getAttributes().isEmpty()) {
+            this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAlternateKey(new AK((ArrayList) rt.getPkKeys()));
+            for (Attribute attribute : rt.getAttributes()) {
+                this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(new Attribute(attribute));
+            }
+        }
+
+        this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addForeignKey(
+                new FK(this.originalErm.getTables().get(this.originalErm.getTables().indexOf(rightEntity)).getName(),
+                        (ArrayList) rightEntity.getPkKeys()));
+        for (Attribute attribute : rightEntity.getPkKeys()) {
+            this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(
+                    new Attribute(attribute.getName() + "_FK", attribute.isNotNull()));
+        }
+
+        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
+    }
+
+    private void ResloveNtoM(){
+
+    }
+
+    public ArrayList<Entitytype> extractEntityTypes(Erm erm) {
+        ArrayList<Entitytype> en = new ArrayList<Entitytype>();
+        for (Table table : erm.getTables()) {
             if (table instanceof Entitytype) {
-                en.add(table);
+                en.add((Entitytype) table);
             }
         }
         return en;
     }
 
-    private ArrayList<Table> extractRelationTypes(ArrayList<Table> list) {
-        ArrayList<Table> rl = new ArrayList<Table>();
-        for (Table table : list) {
+    private ArrayList<Relationtype> extractRelationTypes(Erm erm) {
+        ArrayList<Relationtype> rl = new ArrayList<Relationtype>();
+        for (Table table : erm.getTables()) {
             if (table instanceof Relationtype) {
-                rl.add(table);
+                rl.add((Relationtype) table);
             }
         }
         return rl;
@@ -148,14 +157,11 @@ public class RelationResolver {
     }
 
     private void relinkingBinaryRelations(Entitytype newTable, Entitytype deletedTable) {
-        ArrayList<Relationtype> rts = this.erm.getRelationtypes();
-        for (Relationtype relation : rts) {
-            if (relation.getLinks().get(0).getEnititytype().getName().equals(deletedTable.getName())) {
-                relation.getLinks().add(new EntityLink(newTable, relation.getLinks().get(0).getCardinality(), relation.getLinks().get(0).getFunctionality()));
-                relation.getLinks().remove(0);
-            } else if (relation.getLinks().get(1).getEnititytype().getName().equals(deletedTable.getName())) {
-                relation.getLinks().add(new EntityLink(newTable, relation.getLinks().get(1).getCardinality(), relation.getLinks().get(1).getFunctionality()));
-                relation.getLinks().remove(1);
+        for (Relationtype relation : this.originalErm.getRelationtypes()) {
+            for(EntityLink el : relation.getLinks()) {
+                if (deletedTable.equals(el.getEnititytype())) {
+                    el.changeEntityType(newTable);
+                }
             }
         }
     }
