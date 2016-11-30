@@ -3,6 +3,7 @@ package de.htwg.msi.infe.ermcompile.logic;
 import de.htwg.msi.infe.ermcompile.model.Attribute.AK;
 import de.htwg.msi.infe.ermcompile.model.Attribute.Attribute;
 import de.htwg.msi.infe.ermcompile.model.Attribute.FK;
+import de.htwg.msi.infe.ermcompile.model.Attribute.PK;
 import de.htwg.msi.infe.ermcompile.model.ERM.Erm;
 import de.htwg.msi.infe.ermcompile.model.Table.EntityLink;
 import de.htwg.msi.infe.ermcompile.model.Table.Entitytype;
@@ -51,6 +52,8 @@ public class RelationResolver {
                      */
                     //
                     this.Solve1to1(rt, leftEntity, rightEntity);
+                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rightEntity));
+                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 } else {
                     /*
                     Case [L](1,1)--[]--(0,1)[R]
@@ -60,12 +63,14 @@ public class RelationResolver {
                         2. Add key as FK to L
                      */
                     this.SolveNto1(rt, leftEntity, rightEntity);
+                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 }
             } else {
                 if (linkRight.getCardinality().getMin().equals("1") && linkRight.getCardinality().getMax().equals("1")) {
                     //Case [L](0,1)--[]--(1,1)[R]
                     //TODO Packe PK von L als FK in R
-                    this.Solve1to1(rt, rightEntity, leftEntity);
+                    this.SolveNto1(rt, rightEntity, leftEntity);
+                    this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
                 } else {
                     //Case [L](0,1)--[]--(0,1)[R]
                     //TODO Erstelle Neue Tabelle PK ist PK(L)+PK(R)
@@ -78,7 +83,8 @@ public class RelationResolver {
         } else if (linkLeft.getFunctionality().equals("N") && linkRight.getFunctionality().equals("1")) {
 
         } else {// N M
-
+            this.ResloveNtoM(rt, leftEntity, rightEntity);
+            this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
         }
     }
 
@@ -96,8 +102,6 @@ public class RelationResolver {
             this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(new Attribute(attribute));
         }
 
-        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rightEntity));
-        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
         this.relinkingBinaryRelations(leftEntity, rightEntity);
     }
 
@@ -116,12 +120,32 @@ public class RelationResolver {
             this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(
                     new Attribute(attribute.getName() + "_FK", attribute.isNotNull()));
         }
-
-        this.originalErm.removeTable(this.originalErm.getTables().indexOf(rt));
     }
 
-    private void ResloveNtoM() {
+    private void ResloveNtoM(Relationtype rt, Entitytype leftEntity, Entitytype rightEntity) {
+        Entitytype newEntity = new Entitytype(leftEntity.getName() + "_" + rightEntity.getName());
+        this.originalErm.addTable(newEntity);
+        CopyForeignKey(newEntity, leftEntity);
+        CopyForeignKey(newEntity, rightEntity);
 
+        if (!rt.getAttributes().isEmpty()) {
+            for (Attribute attribute : rt.getAttributes()) {
+                if(attribute instanceof PK)
+                    this.originalErm.getTables().get(this.originalErm.getTables().indexOf(newEntity)).addAttribute(new PK(attribute.getName()));
+                else
+                    this.originalErm.getTables().get(this.originalErm.getTables().indexOf(newEntity)).addAttribute(new Attribute(attribute));
+            }
+        }
+    }
+
+    private void CopyForeignKey(Entitytype leftEntity, Entitytype rightEntity){
+        this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addForeignKey(
+                new FK(this.originalErm.getTables().get(this.originalErm.getTables().indexOf(rightEntity)).getName(),
+                        (ArrayList) rightEntity.getPkKeys()));
+        for (Attribute attribute : rightEntity.getPkKeys()) {
+            this.originalErm.getTables().get(this.originalErm.getTables().indexOf(leftEntity)).addAttribute(
+                    new PK(attribute.getName() + "_FK"));
+        }
     }
 
     private boolean isRLBinary (Relationtype rl) {
